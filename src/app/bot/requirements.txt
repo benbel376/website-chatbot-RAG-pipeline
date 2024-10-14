@@ -1,0 +1,14 @@
+requests
+google-generativeai
+pandas
+langchain-google-genai
+lark
+fastapi
+uvicorn
+elasticsearch
+langchain
+google-generativeai
+langchain-google-genai
+langchain-elasticsearch
+langchain-community
+pydantic

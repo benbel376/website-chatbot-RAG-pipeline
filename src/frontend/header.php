@@ -127,4 +127,4 @@
       </nav>
 
       <!-- Add this near the end of your body section, before the closing body tag -->
-      <?php include_once('./components/floating-chat.php'); ?>
+      <?php include_once('./floating-chat.php'); ?>

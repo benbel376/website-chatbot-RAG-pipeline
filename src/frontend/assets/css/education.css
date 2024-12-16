@@ -13,9 +13,44 @@
     margin-bottom: 25px;
 }
 
+
+/* Add icon box styling to match experience section */
+
+.education .education-header .icon-box {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: var(--vegas-gold);
+    background: var(--eerie-black-1);
+    border: 1.5px solid rgba(205, 168, 85, 0.3);
+    z-index: 1;
+}
+
+.education .education-header .icon-box::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: 50%;
+    background: var(--eerie-black-1);
+    z-index: -1;
+}
+
+.education .education-header .icon-box ion-icon {
+    --ionicon-stroke-width: 40px;
+}
+
+
+/* Update list styling to match experience section */
+
 .education-list {
     font-size: var(--fs-6);
-    margin-left: 45px;
+    margin-left: 54px;
+    position: relative;
 }
 
 .education-item {
@@ -30,22 +65,21 @@
     content: "";
     position: absolute;
     top: -25px;
-    left: -30px;
-    width: 1px;
+    left: -34px;
+    width: 2px;
     height: calc(100% + 50px);
-    background: var(--jet);
+    background: rgba(205, 168, 85, 0.15);
 }
 
 .education-item::after {
     content: "";
     position: absolute;
     top: 5px;
-    left: -33px;
-    height: 6px;
-    width: 6px;
-    background: var(--text-gradient-yellow);
+    left: -37px;
+    height: 8px;
+    width: 8px;
+    background: var(--vegas-gold);
     border-radius: 50%;
-    box-shadow: 0 0 0 4px var(--jet);
 }
 
 .education-item-title {
@@ -71,49 +105,28 @@
 }
 
 
-/* Style for education text list items */
+/* Responsive adjustments */
 
-.education-text li {
-    position: relative;
-    padding-left: 20px;
-    margin-bottom: 10px;
-    font-size: var(--fs-6);
-    line-height: 1.6;
-    color: var(--light-gray);
-}
-
-.education-text li::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    background-color: var(--highlight-color, #b05c09);
-    border-radius: 50%;
-    position: absolute;
-    left: 0;
-    top: 8px;
-}
-
-
-/* Add these responsive styles at the bottom of education.css */
-
-
-/**
- * responsive larger than 580px screen
- */
-
-@media (min-width: 580px) {
-    .timeline-list {
-        margin-left: 65px;
+@media (max-width: 580px) {
+    .education-list {
+        margin-left: 44px;
     }
     .education-item:not(:last-child)::before {
-        left: -40px;
+        left: -34px;
     }
     .education-item::after {
-        height: 8px;
-        width: 8px;
-        left: -43px;
+        left: -37px;
+    }
+}
+
+@media (min-width: 580px) {
+    .education-item:not(:last-child)::before {
+        left: -34px;
+    }
+    .education-item::after {
+        left: -37px;
     }
     .education-item:not(:last-child) {
-        margin-bottom: 0px;
+        margin-bottom: 20px;
     }
 }

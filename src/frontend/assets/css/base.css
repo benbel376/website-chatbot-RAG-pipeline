@@ -449,6 +449,47 @@ main {
 }
 
 
+/*-----------------------------------*\
+  #NAVBAR
+\*-----------------------------------*/
+
+.navbar {
+    position: relative;
+    width: 100% !important;
+    background: hsla(240, 1%, 17%, 0.75);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--jet);
+    border-radius: 15px !important;
+    box-shadow: var(--shadow-2);
+    z-index: 5;
+    margin-bottom: 25px;
+}
+
+.navbar-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar-link {
+    color: var(--light-gray);
+    font-size: var(--fs-8);
+    padding: 20px 7px;
+    transition: color var(--transition-1);
+}
+
+.navbar-link:hover,
+.navbar-link:focus {
+    color: var(--light-gray-70);
+}
+
+.navbar-link.active {
+    color: var(--orange-yellow-crayola);
+}
+
+
 /* Add these responsive styles at the bottom of base.css */
 
 
@@ -581,5 +622,102 @@ main {
         justify-content: center;
         align-items: stretch;
         gap: 25px;
+    }
+}
+
+
+/**
+ * responsive larger than 580px screen - NAVBAR
+ */
+
+@media (min-width: 580px) {
+    .navbar {
+        border-radius: 20px 20px 0 0;
+    }
+    .navbar-list {
+        gap: 20px;
+    }
+    .navbar-link {
+        --fs-8: 14px;
+    }
+}
+
+
+/**
+ * responsive larger than 768px screen - NAVBAR
+ */
+
+@media (min-width: 768px) {
+    .navbar-link {
+        --fs-8: 15px;
+    }
+}
+
+
+/**
+ * responsive larger than 1024px screen - NAVBAR
+ */
+
+@media (min-width: 1024px) {
+    .navbar {
+        position: relative;
+        width: 100% !important;
+        border-radius: 15px;
+        padding: 0;
+        margin-bottom: 25px;
+    }
+    .navbar-list {
+        gap: 30px;
+        padding: 0 20px;
+        justify-content: flex-start;
+    }
+}
+
+
+/* Update main content width */
+
+.main-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+/* Update article width */
+
+article {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--eerie-black-transparent);
+    border: 1px solid var(--jet);
+    border-radius: var(--radius-20);
+    padding: var(--padding-30);
+    box-shadow: var(--shadow-1);
+}
+
+
+/* Update main container */
+
+main {
+    max-width: 1400px;
+    margin: 60px auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+
+/* Update for smaller screens */
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 15px;
+    }
+    article {
+        padding: var(--padding-20);
     }
 }

@@ -15,7 +15,8 @@
 
 .experience-list {
     font-size: var(--fs-6);
-    margin-left: 45px;
+    margin-left: 54px;
+    position: relative;
 }
 
 .experience-item {
@@ -30,22 +31,21 @@
     content: "";
     position: absolute;
     top: -25px;
-    left: -30px;
-    width: 1px;
+    left: -34px;
+    width: 2px;
     height: calc(100% + 50px);
-    background: var(--jet);
+    background: rgba(205, 168, 85, 0.15);
 }
 
 .experience-item::after {
     content: "";
     position: absolute;
     top: 5px;
-    left: -33px;
-    height: 6px;
-    width: 6px;
-    background: var(--text-gradient-yellow);
+    left: -37px;
+    height: 8px;
+    width: 8px;
+    background: var(--vegas-gold);
     border-radius: 50%;
-    box-shadow: 0 0 0 4px var(--jet);
 }
 
 .experience-item-title {
@@ -98,6 +98,7 @@
 
 .show-more-btn {
     position: relative;
+    margin-bottom: 25px;
     background: var(--border-gradient-onyx);
     padding: 8px 15px;
     border-radius: 14px;
@@ -132,13 +133,13 @@
 
 @media (max-width: 580px) {
     .experience-list {
-        margin-left: 40px;
+        margin-left: 44px;
     }
     .experience-item:not(:last-child)::before {
-        left: -30px;
+        left: -34px;
     }
     .experience-item::after {
-        left: -33px;
+        left: -37px;
     }
 }
 
@@ -152,12 +153,10 @@
         margin-left: 65px;
     }
     .experience-item:not(:last-child)::before {
-        left: -40px;
+        left: -34px;
     }
     .experience-item::after {
-        height: 8px;
-        width: 8px;
-        left: -43px;
+        left: -37px;
     }
     .experience-item:not(:last-child) {
         margin-bottom: 0px;
@@ -171,12 +170,40 @@
 
 @media (max-width: 580px) {
     .experience-list {
-        margin-left: 40px;
+        margin-left: 44px;
     }
     .experience-item:not(:last-child)::before {
-        left: -30px;
+        left: -34px;
     }
     .experience-item::after {
-        left: -33px;
+        left: -37px;
     }
+}
+
+.experience .experience-header .icon-box {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: var(--vegas-gold);
+    background: var(--eerie-black-1);
+    border: 1.5px solid rgba(205, 168, 85, 0.3);
+    z-index: 1;
+}
+
+.experience .experience-header .icon-box::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: 50%;
+    background: var(--eerie-black-1);
+    z-index: -1;
+}
+
+.experience .experience-header .icon-box ion-icon {
+    --ionicon-stroke-width: 40px;
 }

@@ -18,6 +18,7 @@
     --onyx: hsl(240, 1%, 17%);
     --eerie-black-1: hsl(240, 2%, 13%);
     --eerie-black-2: hsl(240, 2%, 12%);
+    --eerie-black-transparent: hsl(240deg 2% 13% / 87%);
     --smoky-black: hsl(0, 0%, 7%);
     --white-1: hsl(0, 0%, 100%);
     --white-2: hsl(0, 0%, 98%);

@@ -1,0 +1,82 @@
+{
+    "title": "Blood Vessel Segmentation",
+    "subtitle": "Deep Learning-Based Blood Vessel Segmentation for Medical Image Analysis",
+    "description": "Developed an advanced deep learning system for automated blood vessel segmentation in medical images. The project focuses on accurate vessel detection and segmentation using state-of-the-art computer vision techniques.",
+    "date": "June 12, 2023",
+    "requirements": [
+        "Python 3.8+",
+        "PyTorch",
+        "CUDA-enabled GPU",
+        "OpenCV",
+        "Albumentations",
+        "Docker"
+    ],
+    "technologies": [{
+            "name": "PyTorch",
+            "purpose": "Deep learning framework"
+        },
+        {
+            "name": "OpenCV",
+            "purpose": "Image processing"
+        },
+        {
+            "name": "U-Net",
+            "purpose": "Segmentation architecture"
+        },
+        {
+            "name": "MLflow",
+            "purpose": "Experiment tracking"
+        },
+        {
+            "name": "MONAI",
+            "purpose": "Medical imaging toolkit"
+        }
+    ],
+    "projectStructure": {
+        "name": "Blood Vessel Segmentation Project",
+        "folders": [{
+            "name": "src",
+            "size": "200 KB",
+            "subfolders": [{
+                    "name": "models",
+                    "size": "100 KB",
+                    "files": [{
+                            "name": "unet.py",
+                            "description": "U-Net architecture"
+                        },
+                        {
+                            "name": "losses.py",
+                            "description": "Custom loss functions"
+                        }
+                    ]
+                },
+                {
+                    "name": "data",
+                    "size": "80 KB",
+                    "files": [{
+                            "name": "dataset.py",
+                            "description": "Data loading and augmentation"
+                        },
+                        {
+                            "name": "preprocessing.py",
+                            "description": "Image preprocessing"
+                        }
+                    ]
+                }
+            ],
+            "files": [{
+                    "name": "README.md",
+                    "type": "html5"
+                },
+                {
+                    "name": "requirements.txt",
+                    "type": "file-code-o"
+                }
+            ]
+        }]
+    },
+    "repository": {
+        "url": "https://github.com/username/blood-vessel-segmentation",
+        "label": "Blood Vessel Segmentation on GitHub"
+    }
+}

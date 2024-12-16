@@ -1,0 +1,71 @@
+{
+    "title": "Topic Modeling",
+    "subtitle": "Building an Advanced Topic Modeling System for Document Analysis",
+    "description": "Developed a sophisticated topic modeling system that automatically identifies and extracts key themes from large document collections. The system employs advanced NLP techniques and machine learning algorithms to provide meaningful insights and document organization capabilities.",
+    "date": "February 30, 2023",
+    "requirements": [
+        "Python 3.8+",
+        "CUDA-enabled GPU",
+        "PyTorch",
+        "Transformers Library",
+        "Hugging Face Account",
+        "Docker"
+    ],
+    "technologies": [
+        "PyTorch",
+        "Hugging Face Transformers",
+        "spaCy",
+        "NLTK",
+        "FastAPI",
+        "Redis",
+        "Docker",
+        "MLflow"
+    ],
+    "projectStructure": {
+        "name": "Topic Modeling Project",
+        "folders": [{
+            "name": "src",
+            "size": "180 KB",
+            "subfolders": [{
+                    "name": "models",
+                    "size": "80 KB",
+                    "files": [{
+                            "name": "topic_model.py",
+                            "description": "Core modeling logic"
+                        },
+                        {
+                            "name": "embeddings.py",
+                            "description": "Text embedding generation"
+                        }
+                    ]
+                },
+                {
+                    "name": "preprocessing",
+                    "size": "60 KB",
+                    "files": [{
+                            "name": "text_cleaner.py",
+                            "description": "Text preprocessing pipeline"
+                        },
+                        {
+                            "name": "tokenizer.py",
+                            "description": "Custom tokenization logic"
+                        }
+                    ]
+                }
+            ],
+            "files": [{
+                    "name": "README.md",
+                    "type": "html5"
+                },
+                {
+                    "name": "requirements.txt",
+                    "type": "file-code-o"
+                }
+            ]
+        }]
+    },
+    "repository": {
+        "url": "https://github.com/username/topic-modeling",
+        "label": "Topic Modeling on GitHub"
+    }
+}

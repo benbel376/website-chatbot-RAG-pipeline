@@ -58,7 +58,7 @@ html {
 
 body {
     background: var(--smoky-black);
-    background-image: url(assets/images/background11.jpg);
+    background-image: url(../../assets/images/background11.jpg);
     background-attachment: var(--bg-fixed);
     background-size: var(--bg-cover);
     background-repeat: var(--bg-no-repeat);

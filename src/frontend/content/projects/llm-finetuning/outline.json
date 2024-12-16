@@ -1,0 +1,9 @@
+{
+    "id": "llm-finetuning",
+    "title": "LLM Finetuning for Amharic",
+    "category": "Machine Learning",
+    "tags": ["Machine Learning", "NLP"],
+    "thumbnail": "llm-finetuning.png",
+    "date": "2023-11-30",
+    "shortDescription": "Fine-tuning large language models for Amharic language understanding and generation"
+}

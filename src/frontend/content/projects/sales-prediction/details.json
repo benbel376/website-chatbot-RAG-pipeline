@@ -1,0 +1,82 @@
+{
+    "title": "Sales Prediction",
+    "subtitle": "Building an Advanced Sales Forecasting System with Machine Learning",
+    "description": "Developed a sophisticated sales prediction system that leverages machine learning to forecast future sales trends. The system incorporates multiple data sources, historical patterns, and external factors to provide accurate predictions for business planning.",
+    "date": "September 30, 2023",
+    "requirements": [
+        "Python 3.8+",
+        "TensorFlow",
+        "Pandas",
+        "Scikit-learn",
+        "Docker",
+        "MLflow"
+    ],
+    "technologies": [{
+            "name": "TensorFlow",
+            "purpose": "Deep learning models"
+        },
+        {
+            "name": "Scikit-learn",
+            "purpose": "Feature engineering and modeling"
+        },
+        {
+            "name": "MLflow",
+            "purpose": "Experiment tracking"
+        },
+        {
+            "name": "FastAPI",
+            "purpose": "Model serving"
+        },
+        {
+            "name": "PostgreSQL",
+            "purpose": "Data storage"
+        }
+    ],
+    "projectStructure": {
+        "name": "Sales Prediction Project",
+        "folders": [{
+            "name": "src",
+            "size": "160 KB",
+            "subfolders": [{
+                    "name": "models",
+                    "size": "70 KB",
+                    "files": [{
+                            "name": "predictor.py",
+                            "description": "Main prediction model"
+                        },
+                        {
+                            "name": "feature_engineering.py",
+                            "description": "Feature processing"
+                        }
+                    ]
+                },
+                {
+                    "name": "api",
+                    "size": "50 KB",
+                    "files": [{
+                            "name": "main.py",
+                            "description": "FastAPI endpoints"
+                        },
+                        {
+                            "name": "schemas.py",
+                            "description": "Data validation"
+                        }
+                    ]
+                }
+            ],
+            "files": [{
+                    "name": "README.md",
+                    "type": "html5"
+                },
+                {
+                    "name": "requirements.txt",
+                    "type": "file-code-o"
+                }
+            ]
+        }]
+    },
+    "repository": {
+        "url": "https://github.com/username/sales-prediction",
+        "label": "Sales Prediction on GitHub"
+    }
+}

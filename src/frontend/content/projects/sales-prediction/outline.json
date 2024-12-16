@@ -1,0 +1,9 @@
+{
+    "id": "sales-prediction",
+    "title": "Sales Prediction",
+    "category": "Machine Learning",
+    "tags": ["Machine Learning", "Data"],
+    "thumbnail": "sales-prediction.png",
+    "date": "2023-09-30",
+    "shortDescription": "Advanced sales prediction system using machine learning for accurate forecasting"
+}

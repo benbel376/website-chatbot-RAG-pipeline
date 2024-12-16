@@ -1,0 +1,9 @@
+{
+    "id": "data-pipeline",
+    "title": "ELT Data Pipeline",
+    "category": "Data",
+    "tags": ["Data", "End-to-end"],
+    "thumbnail": "project-etl.png",
+    "date": "2022-08-04",
+    "shortDescription": "End-to-end ELT data pipeline for efficient data processing and analytics"
+}

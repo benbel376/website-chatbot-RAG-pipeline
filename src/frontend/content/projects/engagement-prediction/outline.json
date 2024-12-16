@@ -1,0 +1,9 @@
+{
+    "id": "engagement-prediction",
+    "title": "Engagement Prediction",
+    "category": "Machine Learning",
+    "tags": ["Machine Learning", "Data"],
+    "thumbnail": "engagement-prediction.png",
+    "date": "2023-06-15",
+    "shortDescription": "Machine learning system for predicting user engagement in digital advertising"
+}

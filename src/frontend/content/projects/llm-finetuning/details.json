@@ -1,0 +1,82 @@
+{
+    "title": "LLM Finetuning for Amharic",
+    "subtitle": "Fine-tuning Large Language Models for Enhanced Amharic Language Understanding",
+    "description": "Developed a comprehensive system for fine-tuning large language models to better understand and generate Amharic text. The project involves data collection, preprocessing, model adaptation, and evaluation frameworks specifically designed for the Amharic language.",
+    "date": "November 30, 2023",
+    "requirements": [
+        "Python 3.8+",
+        "PyTorch",
+        "Transformers",
+        "High-RAM GPU",
+        "Hugging Face Account",
+        "Docker"
+    ],
+    "technologies": [{
+            "name": "PyTorch",
+            "purpose": "Deep learning framework"
+        },
+        {
+            "name": "Hugging Face",
+            "purpose": "Model hosting and deployment"
+        },
+        {
+            "name": "PEFT",
+            "purpose": "Parameter-efficient fine-tuning"
+        },
+        {
+            "name": "DeepSpeed",
+            "purpose": "Distributed training"
+        },
+        {
+            "name": "WandB",
+            "purpose": "Experiment tracking"
+        }
+    ],
+    "projectStructure": {
+        "name": "LLM Finetuning Project",
+        "folders": [{
+            "name": "src",
+            "size": "250 KB",
+            "subfolders": [{
+                    "name": "data",
+                    "size": "100 KB",
+                    "files": [{
+                            "name": "dataset.py",
+                            "description": "Dataset processing"
+                        },
+                        {
+                            "name": "tokenizer.py",
+                            "description": "Custom tokenization"
+                        }
+                    ]
+                },
+                {
+                    "name": "training",
+                    "size": "150 KB",
+                    "files": [{
+                            "name": "trainer.py",
+                            "description": "Training pipeline"
+                        },
+                        {
+                            "name": "lora_config.py",
+                            "description": "LoRA configuration"
+                        }
+                    ]
+                }
+            ],
+            "files": [{
+                    "name": "README.md",
+                    "type": "html5"
+                },
+                {
+                    "name": "requirements.txt",
+                    "type": "file-code-o"
+                }
+            ]
+        }]
+    },
+    "repository": {
+        "url": "https://github.com/username/llm-finetuning",
+        "label": "LLM Finetuning on GitHub"
+    }
+}

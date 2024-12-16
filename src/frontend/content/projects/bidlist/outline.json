@@ -1,0 +1,9 @@
+{
+    "id": "bidlist",
+    "title": "Digital Ad Inventory Bidding",
+    "category": "End-to-end",
+    "tags": ["End-to-end", "Machine Learning"],
+    "thumbnail": "bidlist.png",
+    "date": "2023-10-30",
+    "shortDescription": "Automated bidding system for digital advertising inventory using machine learning"
+}

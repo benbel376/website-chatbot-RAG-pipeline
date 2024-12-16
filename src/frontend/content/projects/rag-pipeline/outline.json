@@ -1,0 +1,9 @@
+{
+    "id": "rag-pipeline",
+    "title": "RAG Pipeline",
+    "category": "End-to-end",
+    "tags": ["End-to-end", "Machine Learning"],
+    "thumbnail": "rag-pipeline.png",
+    "date": "2023-06-30",
+    "shortDescription": "End-to-end RAG pipeline for efficient document retrieval and question answering"
+}

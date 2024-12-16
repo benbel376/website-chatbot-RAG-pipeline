@@ -16,13 +16,6 @@ import { initInfiniteScroll } from './modules/infiniteScroll.js';
 import { initCollapse } from './modules/collapse.js';
 import FloatingChat from './modules/floatingChat.js';
 import initCertificationSlider from './modules/certificationSlider.js';
-import { SummaryLoader } from './modules/summaryLoader.js';
-import { ExperienceLoader } from './modules/experienceLoader.js';
-import { EducationLoader } from './modules/educationLoader.js';
-import { SkillsLoader } from './modules/skillsLoader.js';
-import { CertificationsLoader } from './modules/certificationsLoader.js';
-import { TestimonialsLoader } from './modules/testimonialsLoader.js';
-import { HeroLoader } from './modules/heroLoader.js';
 
 
 document.addEventListener('DOMContentLoaded', function() {

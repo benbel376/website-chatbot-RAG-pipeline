@@ -1,0 +1,9 @@
+{
+    "id": "blood-vessel-segmentation",
+    "title": "Blood Vessel Segmentation",
+    "category": "Machine Learning",
+    "tags": ["Machine Learning", "Computer Vision"],
+    "thumbnail": "image-segmentation.png",
+    "date": "2023-06-12",
+    "shortDescription": "Deep learning-based blood vessel segmentation system for medical imaging analysis"
+}

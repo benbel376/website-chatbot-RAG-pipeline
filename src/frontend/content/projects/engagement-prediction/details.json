@@ -1,0 +1,82 @@
+{
+    "title": "Engagement Prediction",
+    "subtitle": "Building an Advanced Engagement Prediction System for Digital Advertising",
+    "description": "Developed a sophisticated machine learning system that predicts user engagement with digital advertisements. The system analyzes historical interaction data and user behavior patterns to forecast engagement likelihood and optimize ad delivery.",
+    "date": "June 15, 2023",
+    "requirements": [
+        "Python 3.8+",
+        "TensorFlow",
+        "Scikit-learn",
+        "PostgreSQL",
+        "Docker",
+        "MLflow"
+    ],
+    "technologies": [{
+            "name": "TensorFlow",
+            "purpose": "Deep learning models"
+        },
+        {
+            "name": "Scikit-learn",
+            "purpose": "Feature engineering"
+        },
+        {
+            "name": "PostgreSQL",
+            "purpose": "Data storage"
+        },
+        {
+            "name": "MLflow",
+            "purpose": "Model tracking"
+        },
+        {
+            "name": "FastAPI",
+            "purpose": "API development"
+        }
+    ],
+    "projectStructure": {
+        "name": "Engagement Prediction Project",
+        "folders": [{
+            "name": "src",
+            "size": "180 KB",
+            "subfolders": [{
+                    "name": "models",
+                    "size": "90 KB",
+                    "files": [{
+                            "name": "predictor.py",
+                            "description": "Main prediction model"
+                        },
+                        {
+                            "name": "features.py",
+                            "description": "Feature engineering"
+                        }
+                    ]
+                },
+                {
+                    "name": "api",
+                    "size": "70 KB",
+                    "files": [{
+                            "name": "main.py",
+                            "description": "FastAPI endpoints"
+                        },
+                        {
+                            "name": "validation.py",
+                            "description": "Input validation"
+                        }
+                    ]
+                }
+            ],
+            "files": [{
+                    "name": "README.md",
+                    "type": "html5"
+                },
+                {
+                    "name": "requirements.txt",
+                    "type": "file-code-o"
+                }
+            ]
+        }]
+    },
+    "repository": {
+        "url": "https://github.com/username/engagement-prediction",
+        "label": "Engagement Prediction on GitHub"
+    }
+}

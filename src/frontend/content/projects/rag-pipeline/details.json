@@ -1,0 +1,52 @@
+{
+    "title": "RAG Pipeline",
+    "overview": {
+        "description": "An end-to-end Retrieval Augmented Generation (RAG) pipeline for efficient document processing and question answering.",
+        "problem": "Traditional document search and QA systems lack context awareness and often provide irrelevant or incomplete answers.",
+        "solution": "Developed a RAG pipeline that combines efficient document retrieval with contextual understanding for accurate answers."
+    },
+    "technical": {
+        "architecture": {
+            "description": "Microservices architecture with vector database integration",
+            "diagram": "rag-architecture.png"
+        },
+        "technologies": [{
+                "name": "LangChain",
+                "purpose": "RAG pipeline orchestration"
+            },
+            {
+                "name": "OpenAI",
+                "purpose": "Language model integration"
+            },
+            {
+                "name": "Pinecone",
+                "purpose": "Vector database"
+            },
+            {
+                "name": "FastAPI",
+                "purpose": "API development"
+            }
+        ],
+        "implementation": "The system uses vector embeddings for efficient document retrieval, combined with LLM for contextual understanding..."
+    },
+    "results": {
+        "achievements": [
+            "90% reduction in query response time",
+            "85% improvement in answer relevance",
+            "Scalable to millions of documents"
+        ],
+        "metrics": {
+            "accuracy": "95% answer accuracy",
+            "latency": "<200ms response time",
+            "coverage": "98% document coverage"
+        },
+        "screenshots": [{
+            "image": "rag-dashboard.png",
+            "caption": "RAG Pipeline Dashboard"
+        }]
+    },
+    "links": {
+        "github": "https://github.com/username/rag-pipeline",
+        "demo": "https://demo.rag-pipeline.com"
+    }
+}

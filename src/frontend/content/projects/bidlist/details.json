@@ -1,0 +1,67 @@
+{
+    "title": "Digital Ad Inventory Bidding",
+    "subtitle": "Building a Bidlist Optimization Algorithm for Real-Time Bidding (RTB) on The Trade Desk (TTD)",
+    "description": "The objective of this project was to design a scalable, data-driven bidlist optimization algorithm for real-time bidding (RTB) on The Trade Desk (TTD) platform. This algorithm processes ad inventory data to select optimal bids, maximizing engagement and performance within budget constraints. The project involved creating a robust data pipeline that extracts, cleans, and transforms RTB data to develop a scoring system that prioritizes inventory based on key performance indicators (KPIs) such as engagement rate and click-through rate. The result is a streamlined, effective bidlist generation that enhances targeting and ROI for advertisers.",
+    "date": "October 29, 2024",
+    "requirements": [
+        "Linux",
+        "Python 3.8 or higher",
+        "Google Cloud SDK",
+        "Docker",
+        "Docker Compose",
+        "BigQuery and Service Account setup"
+    ],
+    "technologies": [
+        "Python",
+        "Google BigQuery",
+        "Pandas and NumPy",
+        "Scikit-Learn",
+        "SQLAlchemy",
+        "Docker",
+        "PostgreSQL",
+        "Scipy for Optimization",
+        "JSON for Data Export"
+    ],
+    "projectStructure": {
+        "name": "Bidlist Optimization Project",
+        "folders": [{
+            "name": "src",
+            "size": "200 KB",
+            "subfolders": [{
+                    "name": "data",
+                    "size": "20 KB",
+                    "files": [{
+                        "name": "biddatatable.csv",
+                        "description": "Sample Data"
+                    }]
+                },
+                {
+                    "name": "scripts",
+                    "size": "100 KB",
+                    "files": [{
+                            "name": "bidlist_optimization.py",
+                            "description": "Main Script"
+                        },
+                        {
+                            "name": "feature_selection.py",
+                            "description": "Feature Engineering"
+                        }
+                    ]
+                }
+            ],
+            "files": [{
+                    "name": "README.md",
+                    "type": "html5"
+                },
+                {
+                    "name": "requirements.txt",
+                    "type": "file-code-o"
+                }
+            ]
+        }]
+    },
+    "repository": {
+        "url": "https://github.com/your-username/bidlist-optimization",
+        "label": "Bidlist Optimization on GitHub"
+    }
+}

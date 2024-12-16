@@ -1,0 +1,71 @@
+{
+    "title": "ELT Data Pipeline",
+    "subtitle": "Building a Modern Data Stack with dbt, Airflow, and Snowflake",
+    "description": "Developed a robust ELT (Extract, Load, Transform) data pipeline that processes large-scale data efficiently. The pipeline integrates various data sources, implements data quality checks, and automates the entire data processing workflow using modern data stack technologies.",
+    "date": "August 4, 2022",
+    "requirements": [
+        "Python 3.8+",
+        "Apache Airflow",
+        "dbt Core",
+        "Snowflake Account",
+        "Docker & Docker Compose",
+        "Git"
+    ],
+    "technologies": [
+        "Apache Airflow",
+        "dbt (data build tool)",
+        "Snowflake",
+        "Python",
+        "SQL",
+        "Docker",
+        "Great Expectations",
+        "Terraform"
+    ],
+    "projectStructure": {
+        "name": "Data Pipeline Project",
+        "folders": [{
+            "name": "src",
+            "size": "150 KB",
+            "subfolders": [{
+                    "name": "dags",
+                    "size": "50 KB",
+                    "files": [{
+                            "name": "data_pipeline_dag.py",
+                            "description": "Main Airflow DAG"
+                        },
+                        {
+                            "name": "data_quality_dag.py",
+                            "description": "Data Quality Checks"
+                        }
+                    ]
+                },
+                {
+                    "name": "dbt",
+                    "size": "80 KB",
+                    "files": [{
+                            "name": "models",
+                            "description": "dbt Transformation Models"
+                        },
+                        {
+                            "name": "tests",
+                            "description": "Data Quality Tests"
+                        }
+                    ]
+                }
+            ],
+            "files": [{
+                    "name": "README.md",
+                    "type": "html5"
+                },
+                {
+                    "name": "docker-compose.yml",
+                    "type": "file-code-o"
+                }
+            ]
+        }]
+    },
+    "repository": {
+        "url": "https://github.com/username/data-pipeline",
+        "label": "Data Pipeline on GitHub"
+    }
+}

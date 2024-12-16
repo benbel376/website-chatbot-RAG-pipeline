@@ -67,7 +67,6 @@
   <link rel="stylesheet" href="./assets/css/style-general.css">
   <link rel="stylesheet" href="./assets/css/style-responsive.css"> -->
   <link rel="stylesheet" href="./assets/css/main.css">
-  <link rel="stylesheet" href="./assets/css/style-profile.css">
 
   <!-- google font link -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

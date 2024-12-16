@@ -19,6 +19,10 @@ import initCertificationSlider from './modules/certificationSlider.js';
 import { SummaryLoader } from './modules/summaryLoader.js';
 import { ExperienceLoader } from './modules/experienceLoader.js';
 import { EducationLoader } from './modules/educationLoader.js';
+import { SkillsLoader } from './modules/skillsLoader.js';
+import { CertificationsLoader } from './modules/certificationsLoader.js';
+import { TestimonialsLoader } from './modules/testimonialsLoader.js';
+import { HeroLoader } from './modules/heroLoader.js';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -70,5 +74,58 @@ document.addEventListener('DOMContentLoaded', function() {
     const educationContent = document.querySelector('#education-content');
     if (educationContent) {
         educationLoader.renderEducation(educationContent);
+    }
+
+    // Initialize and load skills content first
+    const skillsLoader = new SkillsLoader({
+        basePath: './content'
+    });
+
+    const skillsContent = document.querySelector('#skills-content');
+    if (skillsContent) {
+        // Load skills content first, then initialize toolsTable
+        skillsLoader.renderSkills(skillsContent)
+            .then(() => {
+                initToolsTable();
+            })
+            .catch(error => {
+                console.error('Error loading skills:', error);
+            });
+    }
+
+    // Initialize certifications loader
+    const certificationsLoader = new CertificationsLoader({
+        basePath: './content',
+        imagesPath: './assets/images'
+    });
+
+    // Load certifications content
+    const certificationsContent = document.querySelector('#certifications-content');
+    if (certificationsContent) {
+        certificationsLoader.renderCertifications(certificationsContent);
+    }
+
+    // Initialize testimonials loader
+    const testimonialsLoader = new TestimonialsLoader({
+        basePath: './content',
+        imagesPath: './assets/images'
+    });
+
+    // Load testimonials content
+    const testimonialsContent = document.querySelector('#testimonials-content');
+    if (testimonialsContent) {
+        testimonialsLoader.renderTestimonials(testimonialsContent);
+    }
+
+    // Initialize hero loader
+    const heroLoader = new HeroLoader({
+        basePath: './content',
+        imagesPath: './assets/images'
+    });
+
+    // Load hero content into the existing hero-wrapper
+    const heroContent = document.querySelector('.hero-wrapper');
+    if (heroContent) {
+        heroLoader.renderHero(heroContent);
     }
 });

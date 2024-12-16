@@ -17,27 +17,32 @@ export function initCollapsibleSections() {
                 }
             });
 
-            // Create and append the "Show More" button
-            const showMoreBtn = document.createElement('button');
-            showMoreBtn.className = 'show-more-btn';
-            showMoreBtn.textContent = 'Show More';
-
-            // Add button after the experience-text ul
+            // Check if a show more button already exists after this experience-text
             const experienceText = item.querySelector('.experience-text');
-            experienceText.insertAdjacentElement('afterend', showMoreBtn);
+            const existingButton = experienceText.nextElementSibling;
 
-            // Add click event listener to the button
-            showMoreBtn.addEventListener('click', function() {
-                const isExpanded = this.textContent === 'Show Less';
+            if (!existingButton || !existingButton.classList.contains('show-more-btn')) {
+                // Create and append the "Show More" button only if it doesn't exist
+                const showMoreBtn = document.createElement('button');
+                showMoreBtn.className = 'show-more-btn';
+                showMoreBtn.textContent = 'Show More';
 
-                bulletPoints.forEach((bullet, index) => {
-                    if (index >= 3) {
-                        bullet.style.display = isExpanded ? 'none' : 'list-item';
-                    }
+                // Add button after the experience-text ul
+                experienceText.insertAdjacentElement('afterend', showMoreBtn);
+
+                // Add click event listener to the button
+                showMoreBtn.addEventListener('click', function() {
+                    const isExpanded = this.textContent === 'Show Less';
+
+                    bulletPoints.forEach((bullet, index) => {
+                        if (index >= 3) {
+                            bullet.style.display = isExpanded ? 'none' : 'list-item';
+                        }
+                    });
+
+                    this.textContent = isExpanded ? 'Show More' : 'Show Less';
                 });
-
-                this.textContent = isExpanded ? 'Show More' : 'Show Less';
-            });
+            }
         }
     });
 }

@@ -1,0 +1,61 @@
+/*-----------------------------------*\
+  #UTILITIES
+\*-----------------------------------*/
+
+
+/**
+ * State classes
+ */
+
+.loaded {
+    overflow: visible;
+}
+
+.dark-theme {
+    --bg-gradient-onyx: linear-gradient( to bottom right, hsl(240, 1%, 25%) 3%, hsl(0, 0%, 19%) 97%);
+}
+
+
+/**
+ * Visibility utilities
+ */
+
+.hidden {
+    display: none !important;
+}
+
+.active {
+    display: block;
+}
+
+
+/**
+ * Selection styles
+ */
+
+::selection {
+    background: var(--orange-yellow-crayola);
+    color: var(--smoky-black);
+}
+
+:focus {
+    outline-color: var(--orange-yellow-crayola);
+}
+
+
+/**
+ * Scrollbar utilities
+ */
+
+.has-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.has-scrollbar::-webkit-scrollbar-track {
+    background: var(--onyx);
+}
+
+.has-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--orange-yellow-crayola);
+    border-radius: 10px;
+}

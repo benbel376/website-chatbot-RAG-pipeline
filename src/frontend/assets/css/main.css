@@ -1,0 +1,53 @@
+/*-----------------------------------*\
+  #MAIN CSS
+\*-----------------------------------*/
+
+
+/**
+ * copyright 2022 @codewithsadee
+ */
+
+
+/**
+* basic styles
+*/
+
+@import 'variables.css';
+@import 'base.css';
+@import 'utilities.css';
+
+/**
+* profile page styles
+
+*/
+
+@import 'hero.css';
+@import 'summary.css';
+@import 'education.css';
+@import 'experience.css';
+@import 'skills.css';
+@import 'certification.css';
+@import 'testimonials.css';
+
+/**
+* projects page styles
+*/
+
+@import 'project-controls.css';
+@import 'project-cards.css';
+@import 'project-detail.css';
+
+/**
+* blogs page styles
+*/
+
+@import 'blogs.css';
+@import 'blog-details.css';
+
+/**
+* contacts page styles
+*/
+
+@import 'contact.css';
+
+/* @import 'utilities.css'; */

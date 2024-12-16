@@ -1,0 +1,387 @@
+/* portfolio details */
+
+.list-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.go-back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    color: var(--white-2);
+    font-size: 20px;
+    opacity: 0;
+    transition: opacity var(--transition-1), transform var(--transition-1);
+}
+
+.go-back-btn ion-icon {
+    margin-right: 5px;
+}
+
+.go-back-btn.visible {
+    opacity: 1;
+}
+
+.go-back-btn:hover {
+    transform: translateX(-5px);
+    /* Moves the button slightly to the left on hover */
+    color: var(--orange-yellow-crayola);
+    /* Change color on hover */
+}
+
+.project-details {
+    display: none;
+    padding: 20px;
+    border-radius: 14px;
+    background: var(--eerie-black-2);
+    box-shadow: var(--shadow-1);
+}
+
+.project-details.active {
+    display: block;
+}
+
+.detail-unit {
+    display: none;
+}
+
+.detail-unit.active {
+    display: block;
+}
+
+.projects[data-project-list] {
+    display: block;
+}
+
+.projects.hidden {
+    display: none;
+}
+
+.detail-section {
+    margin-bottom: 40px;
+}
+
+.project-detail-title {
+    color: var(--white-2);
+    font-size: var(--fs-2);
+    margin-bottom: 20px;
+    margin-top: -40px;
+}
+
+.project-detail-subtitle {
+    color: var(--light-gray);
+    font-size: var(--fs-5);
+    margin-bottom: 40px;
+}
+
+.project-detail-description {
+    color: var(--light-gray);
+    font-size: var(--fs-6);
+    font-weight: var(--fw-300);
+    line-height: 1.6;
+}
+
+.project-detail-deployment {
+    color: var(--light-gray);
+    font-size: var(--fs-6);
+    font-weight: var(--fw-300);
+    line-height: 1.6;
+}
+
+.project-detail-implementation {
+    color: var(--light-gray);
+    font-size: var(--fs-6);
+    font-weight: var(--fw-300);
+    line-height: 1.6;
+}
+
+.project-detail-date {
+    color: var(--light-gray);
+    font-size: var(--fs-4);
+    margin-bottom: 20px;
+}
+
+.detail-heading {
+    color: var(--white-2);
+    font-size: var(--fs-4);
+    margin-bottom: 10px;
+}
+
+.technologies-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: var(--white-2);
+}
+
+.technologies-list li {
+    background: var(--vegas-gold);
+    padding: 5px 10px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-1);
+}
+
+.references-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.references-list li {
+    margin-bottom: 10px;
+}
+
+.references-list a {
+    color: var(--orange-yellow-crayola);
+    text-decoration: none;
+    transition: color var(--transition-1);
+}
+
+.references-list a:hover {
+    color: var(--white-2);
+}
+
+.buttons-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.detail-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    font-size: var(--fs-4);
+    font-weight: var(--fw-600);
+    text-transform: uppercase;
+    color: var(--white-2);
+    background: var(--onyx);
+    border-radius: 12px;
+    border: 1px solid var(--jet);
+    cursor: pointer;
+    box-shadow: var(--shadow-2);
+    transition: background-color var(--transition-1), transform var(--transition-1), color var(--transition-1);
+}
+
+.detail-button ion-icon {
+    margin-right: 10px;
+    font-size: var(--fs-3);
+}
+
+.detail-button:hover {
+    background: var(--orange-yellow-crayola);
+    color: var(--smoky-black);
+    transform: translateY(-2px);
+}
+
+.github-button {
+    background: var(--eerie-black-2);
+}
+
+.preview-button {
+    background: var(--onyx);
+}
+
+.requirements-section {
+    margin-bottom: 40px;
+}
+
+.requirements-list {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.requirements-list li {
+    position: relative;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    color: var(--light-gray);
+    font-size: var(--fs-6);
+    font-weight: var(--fw-300);
+    line-height: 1.6;
+}
+
+.requirements-list li::before {
+    content: "\2022";
+    /* Bullet point */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--orange-yellow-crayola);
+    font-size: var(--fs-3);
+    line-height: 1;
+}
+
+.tree {
+    position: var(--position-relative);
+    margin-top: var(--margin-20);
+    padding: var(--padding-30);
+    font-family: var(--ff-roboto);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-400);
+    line-height: var(--line-height-1-5);
+    color: var(--white-1);
+}
+
+.tree span {
+    font-size: var(--fs-10);
+    font-style: italic;
+    letter-spacing: var(--letter-spacing-04);
+    color: var(--light-gray);
+}
+
+.tree .fa-folder-open,
+.tree .fa-folder {
+    color: var(--vegas-gold);
+}
+
+.tree .fa-html5 {
+    color: var(--color-success);
+}
+
+.tree ul {
+    padding-left: var(--padding-5);
+    list-style: var(--list-style-none);
+}
+
+.tree ul li {
+    position: var(--position-relative);
+    padding-top: var(--padding-5);
+    padding-bottom: var(--padding-5);
+    padding-left: var(--padding-15);
+    box-sizing: var(--box-border);
+    user-select: none;
+}
+
+.tree ul li details summary {
+    outline: var(--outline-none);
+}
+
+.tree ul li details summary::-webkit-details-marker {
+    display: var(--display-none);
+}
+
+.tree ul li details[open]>summary i:before {
+    content: "\f07c";
+}
+
+.tree ul li details[disabled]>summary {
+    cursor: var(--cursor-not-allowed);
+}
+
+.tree ul li details[disabled]>summary i:before {
+    content: "\f65d";
+    color: var(--color-disabled);
+}
+
+.tree ul li:before {
+    position: var(--position-absolute);
+    top: var(--top-15);
+    left: var(--margin-0);
+    width: var(--width-10);
+    height: var(--height-1);
+    margin: var(--margin-auto);
+    content: '';
+    background-color: var(--light-gray-70);
+}
+
+.tree ul li:after {
+    position: var(--position-absolute);
+    top: var(--margin-0);
+    bottom: var(--margin-0);
+    left: var(--margin-0);
+    width: var(--width-1);
+    height: var(--height-100);
+    content: '';
+    background-color: var(--light-gray-70);
+}
+
+.tree ul li:last-child:after {
+    height: var(--height-15);
+}
+
+.tree ul a {
+    cursor: var(--cursor-pointer);
+}
+
+.tree ul a:hover {
+    text-decoration: var(--text-decoration-none);
+}
+
+
+/* Add these responsive styles at the bottom of project-detail.css */
+
+
+/**
+ * responsive larger than 450px screen
+ */
+
+@media (min-width: 450px) {
+    .article-title {
+        margin-top: 0px;
+    }
+    .go-back-btn {
+        margin-top: -50px;
+        font-size: 17px;
+    }
+}
+
+
+/**
+ * responsive larger than 580px screen
+ */
+
+@media (min-width: 580px) {
+    .article-title {
+        font-weight: var(--fw-600);
+        padding-bottom: 15px;
+        margin-top: 0px;
+    }
+    .go-back-btn {
+        margin-top: 0px;
+        font-size: 17px;
+    }
+}
+
+
+/**
+ * responsive larger than 768px screen
+ */
+
+@media (min-width: 768px) {
+    .project-detail-title {
+        margin-top: 0;
+    }
+    .buttons-section {
+        gap: 30px;
+    }
+    .detail-button {
+        padding: 20px;
+    }
+}
+
+
+/**
+ * responsive for mobile screens
+ */
+
+@media (max-width: 450px) {
+    .go-back-btn {
+        margin-top: 0px;
+    }
+    .buttons-section {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .detail-button {
+        width: 100%;
+    }
+}

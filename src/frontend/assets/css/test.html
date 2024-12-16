@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="test.css">
+    <style>
+
+        .tree {
+            position: relative;
+            background: white;
+            margin-top: 20px;
+            padding: 30px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: .85rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+
+            span {
+                font-size: 13px;
+                font-style: italic;
+                letter-spacing: .4px;
+                color: #a8a8a8;
+            }
+
+            .fa-folder-open,
+            .fa-folder {
+                color: #e3b314;
+            }
+
+            .fa-html5 {
+                color: #0b941b;
+            }
+
+            ul {
+                padding-left: 5px;
+                list-style: none;
+
+                li {
+                    position: relative;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    padding-left: 15px;
+                    -webkit-box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+                    user-select: none;
+
+                    details {
+                        summary {
+                            outline: none
+                        }
+
+                        summary::-webkit-details-marker {
+                            display: none;
+                        }
+
+                        &[open]>summary i:before {
+                            content: "\f07c"
+                        }
+
+                        &[disabled]>summary {
+                            cursor: not-allowed;
+
+                            & i:before {
+                                content: "\f65d";
+                                color: #7f96ae;
+                            }
+                        }
+                    }
+
+                    &:before {
+                        position: absolute;
+                        top: 15px;
+                        left: 0;
+                        width: 10px;
+                        height: 1px;
+                        margin: auto;
+                        content: '';
+                        background-color: #666;
+                    }
+
+                    &:after {
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        width: 1px;
+                        height: 100%;
+                        content: '';
+                        background-color: #666;
+                    }
+
+                    &:last-child:after {
+                        height: 15px;
+                    }
+                }
+
+                a {
+                    cursor: pointer;
+
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="folders">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+        <div class="tree">
+            <ul>
+                <li>
+                    <details>
+                        <summary><i class="fa fa-folder"></i> Project</summary>
+                        <ul>
+                            <li>
+                                <details>
+                                    <summary><i class="fa fa-folder"></i> Example Folder <span>- 12 KB</span></summary>
+                                    <ul>
+                                        <li>
+                                            <details>
+                                                <summary><i class="fa fa-folder"></i> css<span>- 5 KB</span></summary>
+                                                <ul>
+                                                    <li><i class="fa fa-code"></i> CSS Files <span>- CSS files</span>
+                                                    </li>
+                                                </ul>
+                                            </details>
+                                        </li>
+                                        <li>
+                                            <details>
+                                                <summary><i class="fa fa-folder"></i> Empty Folder <span>- 0
+                                                        bytes</span></summary>
+                                            </details>
+                                        </li>
+                                        <li><i class="fab fa-html5"></i> index.html</li>
+                                        <li><i class="fa fa-picture-o"></i> favicon.ico</li>
+                                    </ul>
+                                </details>
+                            </li>
+                            <li>
+                                <details disabled>
+                                    <summary><i class="fa fa-folder"></i> Disabled Folder <span>- 1023 MB</span>
+                                    </summary>
+                                </details>
+                            </li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-5 pl-3">
+            <strong>Note:</strong> Saw this online and had to create a SASS version for <a
+                href="http://bootadmin.org">BootAdmin.org</a>.
+            <br>
+            <strong>Note 2:</strong> Saw this on codepen and had to create a details/summary version for <a
+                href="https://codepen.io/sazzad">Sazzad</a>.
+        </div>
+    </div>
+
+</body>
+
+</html>

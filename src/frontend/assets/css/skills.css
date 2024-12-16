@@ -1,0 +1,297 @@
+/*-----------------------------------*\
+  #TABLES COMPONENT
+\*-----------------------------------*/
+
+
+/* Main Table Structure */
+
+#toolsTable {
+    width: 100%;
+    background: var(--eerie-black-2);
+    color: var(--white-2);
+    border-radius: 10px;
+    border: 1px solid #666;
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+}
+
+
+/* Table Header */
+
+#toolsTable thead {
+    background: var(--smoky-black);
+}
+
+#toolsTable thead th {
+    padding: 12px 15px;
+    font-size: var(--fs-4);
+    text-align: left;
+    border-bottom: 2px solid var(--jet);
+    position: relative;
+}
+
+
+/* Table Body */
+
+#toolsTable tbody tr {
+    background: var(--eerie-black-1);
+    transition: background 0.3s ease;
+}
+
+#toolsTable tbody tr:hover {
+    background: var(--eerie-black-2);
+}
+
+#toolsTable tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--jet);
+    font-size: var(--fs-6);
+    vertical-align: top;
+}
+
+
+/* Alternating Row Colors */
+
+#toolsTable tbody tr:nth-child(odd) {
+    background: var(--eerie-black-2);
+}
+
+#toolsTable tbody tr:nth-child(even) {
+    background: var(--eerie-black-1);
+}
+
+#toolsTable tbody tr:hover {
+    background: var(--onyx);
+}
+
+
+/* DataTables Wrapper */
+
+.dataTables_wrapper {
+    color: var(--white-2);
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Controls Container */
+
+.controls-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    gap: 40px;
+}
+
+
+/* Category Filter */
+
+.custom-filter {
+    display: flex;
+    align-items: center;
+}
+
+.custom-filter label {
+    margin-right: 5px;
+    color: var(--white-2);
+    font-weight: var(--fw-500);
+}
+
+.custom-filter select {
+    background: var(--eerie-black-1);
+    border: 1px solid var(--jet);
+    color: var(--white-2);
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 20px;
+    min-width: 150px;
+}
+
+
+/* DataTables Controls */
+
+.dataTables-controls {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-left: -15px;
+    justify-content: space-between;
+}
+
+.dataTables_filter,
+.dataTables_length {
+    display: flex;
+    align-items: center;
+}
+
+.dataTables_filter label,
+.dataTables_length label {
+    display: flex;
+    align-items: center;
+    color: var(--white-2);
+    font-weight: var(--fw-500);
+}
+
+.dataTables_filter input,
+.dataTables_length select {
+    background: var(--eerie-black-1);
+    border: 1px solid var(--jet);
+    color: var(--white-2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+    min-width: 100px;
+}
+
+
+/* Pagination */
+
+.dataTables_paginate {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dataTables_paginate a.paginate_button.first,
+.dataTables_paginate a.paginate_button.previous,
+.dataTables_paginate a.paginate_button.next,
+.dataTables_paginate a.paginate_button.last,
+.dataTables_paginate a.page-link,
+.dataTables_paginate span.current,
+.dataTables_paginate span.ellipsis {
+    color: var(--orange-yellow-crayola) !important;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.dataTables_paginate span.current {
+    background: var(--orange-yellow-crayola);
+    color: var(--eerie-black-1) !important;
+}
+
+.dataTables_paginate span.ellipsis {
+    cursor: default;
+    color: var(--light-gray);
+    background: transparent;
+}
+
+
+/* Pagination Hover States */
+
+.dataTables_paginate a.paginate_button.first:hover,
+.dataTables_paginate a.paginate_button.previous:hover,
+.dataTables_paginate a.paginate_button.next:hover,
+.dataTables_paginate a.paginate_button.last:hover,
+.dataTables_paginate a.page-link:hover {
+    background: var(--jet);
+    color: var(--white-2) !important;
+}
+
+
+/* Info Text */
+
+.dataTables_info {
+    margin-top: 15px;
+    color: var(--white-2);
+    font-size: var(--fs-6);
+}
+
+
+/* Tool Cell Styling */
+
+.tool-cell {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin: auto;
+}
+
+.tool-icon {
+    margin-right: 8px;
+    color: var(--blue-color);
+}
+
+.tool-name {
+    color: var(--white-2);
+}
+
+
+/* Expandable Details */
+
+.details-cell {
+    position: relative;
+}
+
+.details-snippet {
+    display: inline;
+}
+
+.details-full {
+    display: none;
+}
+
+.toggle-details {
+    color: var(--orange-yellow-crayola);
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: var(--fw-500);
+}
+
+.toggle-details:hover {
+    text-decoration: underline;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+    #toolsTable thead {
+        display: none;
+    }
+    #toolsTable,
+    #toolsTable tbody,
+    #toolsTable tr,
+    #toolsTable td {
+        display: block;
+        width: 100%;
+    }
+    #toolsTable tr {
+        margin-bottom: 15px;
+        background: var(--eerie-black-1);
+        padding: 10px;
+        border-radius: 10px;
+    }
+    #toolsTable td {
+        text-align: left;
+        padding-left: 50%;
+        position: relative;
+    }
+    #toolsTable td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: 600;
+    }
+}
+
+
+/**
+ * responsive larger than 580px screen
+ */
+
+@media (min-width: 580px) {
+    .skills-item:not(:last-child) {
+        margin-bottom: 0px;
+    }
+}

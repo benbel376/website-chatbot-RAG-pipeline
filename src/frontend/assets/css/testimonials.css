@@ -26,22 +26,54 @@
 
 .testimonials-item {
     min-width: 100%;
-    margin-top: 30px;
     scroll-snap-align: center;
 }
 
-.testimonials-avatar-box {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(15px, -25px);
-    background: var(--bg-gradient-onyx);
-    border-radius: 14px;
+
+/* Content Card Styling */
+
+.content-card {
+    position: relative;
+    background: var(--eerie-black-1);
+    padding: 30px;
+    padding-top: 60px;
+    /* Increased to accommodate image */
+    border-radius: var(--radius-14);
+    border: 1px solid var(--jet);
     box-shadow: var(--shadow-1);
 }
 
+
+/* Avatar Box Styling */
+
+.testimonials-avatar-box {
+    position: absolute;
+    top: -25px;
+    /* Pull up slightly above card */
+    left: 30px;
+    /* Align with card padding */
+    background: var(--bg-gradient-onyx);
+    border-radius: var(--radius-12);
+    box-shadow: var(--shadow-1);
+    overflow: hidden;
+    /* Ensure image stays within bounds */
+}
+
+.testimonials-avatar-box img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: var(--radius-12);
+}
+
+
+/* Testimonial Content Styling */
+
 .testimonials-item-title {
-    margin-bottom: 7px;
+    margin-bottom: 15px;
+    color: var(--white-2);
+    font-size: var(--fs-4);
+    font-weight: var(--fw-500);
 }
 
 .testimonials-text {
@@ -49,11 +81,37 @@
     font-size: var(--fs-6);
     font-weight: var(--fw-300);
     line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.testimonials-text p {
     display: -webkit-box;
-    line-clamp: 4;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 2;
+    /* Limit to 2 lines */
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 10px;
+}
+
+.testimonials-text h3 {
+    color: var(--orange-yellow-crayola);
+    font-size: var(--fs-7);
+    margin-bottom: 10px;
+}
+
+.testimonials-text a {
+    color: var(--orange-yellow-crayola);
+    text-decoration: none;
+    font-size: var(--fs-7);
+    font-weight: var(--fw-500);
+    transition: opacity var(--transition-1);
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.testimonials-text a:hover {
+    opacity: 0.8;
 }
 
 
@@ -181,12 +239,7 @@
 }
 
 
-/* Add these responsive styles at the bottom of testimonials.css */
-
-
-/**
- * responsive larger than 580px screen
- */
+/* Responsive Styles */
 
 @media (min-width: 580px) {
     .testimonials-title {
@@ -199,72 +252,34 @@
         padding-bottom: 35px;
     }
     .content-card {
-        padding: 30px;
-        padding-top: 25px;
+        padding: 35px;
+        padding-top: 75px;
+        /* Increased for larger screens */
     }
     .testimonials-avatar-box {
-        transform: translate(30px, -30px);
-        border-radius: 20px;
+        top: -30px;
+        left: 35px;
     }
     .testimonials-avatar-box img {
         width: 80px;
-        border-radius: 20px !important;
+        height: 80px;
     }
     .testimonials-item-title {
-        margin-bottom: 10px;
-        margin-left: 95px;
-    }
-    .testimonials-text {
-        line-clamp: 2;
-        -webkit-line-clamp: 2;
+        margin-bottom: 20px;
     }
 }
-
-
-/**
- * responsive larger than 768px screen
- */
 
 @media (min-width: 768px) {
-    /* testimonials modal */
-    .modal-container {
-        padding: 20px;
-    }
-    .testimonials-modal {
-        display: flex;
-        justify-content: flex-start;
-        align-items: stretch;
-        gap: 25px;
-        padding: 30px;
-        border-radius: 20px;
-    }
-    .modal-img-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .modal-avatar-box {
-        border-radius: 18px;
-        margin-bottom: 0;
-    }
-    .modal-avatar-box img {
-        width: 65px;
-        border-radius: 20px;
-    }
-    .modal-img-wrapper>img {
-        display: block;
-        flex-grow: 1;
-        width: 35px;
+    .testimonials-text {
+        font-size: var(--fs-6);
     }
 }
-
-
-/**
- * responsive larger than 1024px screen
- */
 
 @media (min-width: 1024px) {
     .testimonials-item {
         min-width: calc(50% - 15px);
+    }
+    .testimonials-text {
+        font-size: var(--fs-6);
     }
 }

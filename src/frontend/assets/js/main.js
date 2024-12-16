@@ -16,6 +16,9 @@ import { initInfiniteScroll } from './modules/infiniteScroll.js';
 import { initCollapse } from './modules/collapse.js';
 import FloatingChat from './modules/floatingChat.js';
 import initCertificationSlider from './modules/certificationSlider.js';
+import { SummaryLoader } from './modules/summaryLoader.js';
+import { ExperienceLoader } from './modules/experienceLoader.js';
+import { EducationLoader } from './modules/educationLoader.js';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -34,4 +37,38 @@ document.addEventListener('DOMContentLoaded', function() {
     initCollapse();
     FloatingChat.init();
     initCertificationSlider();
+
+    // Initialize summary loader with relative paths
+    const summaryLoader = new SummaryLoader({
+        basePath: './content', // Relative to the root of the frontend folder
+        imagesPath: './assets/images'
+    });
+
+    // Load summary content
+    const summaryContent = document.querySelector('#summary-content');
+    if (summaryContent) {
+        summaryLoader.renderSummary(summaryContent);
+    }
+
+    // Initialize experience loader
+    const experienceLoader = new ExperienceLoader({
+        basePath: './content'
+    });
+
+    // Load experience content
+    const experienceContent = document.querySelector('#experience-content');
+    if (experienceContent) {
+        experienceLoader.renderExperience(experienceContent);
+    }
+
+    // Initialize education loader
+    const educationLoader = new EducationLoader({
+        basePath: './content'
+    });
+
+    // Load education content
+    const educationContent = document.querySelector('#education-content');
+    if (educationContent) {
+        educationLoader.renderEducation(educationContent);
+    }
 });

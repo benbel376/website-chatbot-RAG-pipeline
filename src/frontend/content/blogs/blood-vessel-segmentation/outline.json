@@ -1,0 +1,12 @@
+{
+    "config": {
+        "showBlog": true
+    },
+    "id": "blood-vessel-segmentation",
+    "title": "Blood Vessel Segmentation",
+    "category": "Computer Vision",
+    "tags": ["Machine Learning", "Computer Vision", "Deep Learning"],
+    "thumbnail": "image-segmentation.png",
+    "date": "2023-06-12",
+    "shortDescription": "Building a deep learning system for automated blood vessel segmentation in medical images using U-Net architecture"
+}

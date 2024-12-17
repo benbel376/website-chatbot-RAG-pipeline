@@ -1,4 +1,7 @@
 {
+    "config": {
+        "showProject": true
+    },
     "id": "data-pipeline",
     "title": "ELT Data Pipeline",
     "category": "Data",

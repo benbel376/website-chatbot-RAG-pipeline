@@ -1,4 +1,7 @@
 {
+    "config": {
+        "showProject": true
+    },
     "id": "blood-vessel-segmentation",
     "title": "Blood Vessel Segmentation",
     "category": "Machine Learning",

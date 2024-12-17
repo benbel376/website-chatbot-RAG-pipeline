@@ -1,4 +1,7 @@
 {
+    "config": {
+        "showProject": true
+    },
     "id": "bidlist",
     "title": "Digital Ad Inventory Bidding",
     "category": "End-to-end",

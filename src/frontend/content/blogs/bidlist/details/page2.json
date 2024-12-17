@@ -1,0 +1,25 @@
+{
+    "sections": [{
+            "type": "text",
+            "content": "Selecting only highly informative features minimizes computational load while retaining meaningful data. This helps our algorithm be efficient and accurate."
+        },
+        {
+            "type": "section",
+            "title": "4. Mutual Information-Based Feature Selection",
+            "content": "Mutual Information (MI) measures the dependency between variables. Here, we calculate MI between each feature and the target KPI, engagement_rate, to determine which features are most informative for the algorithm.",
+            "code": {
+                "language": "python",
+                "content": "from sklearn.feature_selection import mutual_info_regression\ntarget = 'engagement_rate'\ninventory_features = available_label_encodable_columns\nmi_scores = mutual_info_regression(df[inventory_features], df[target], discrete_features=True)\nmi_df = pd.DataFrame({'Feature': inventory_features, 'MI Score': mi_scores}).sort_values(by='MI Score', ascending=False)\nprint(\"Top features selected based on mutual information:\")\nprint(mi_df)"
+            }
+        },
+        {
+            "type": "section",
+            "title": "5. Aggregation of Data by Selected Features",
+            "content": "Grouping data based on high-MI features allows us to compute aggregate KPIs, giving a holistic view of ad performance across feature combinations. This grouping approach is key to creating a more accurate bid list by treating each unique feature combination as a distinct entity. By aggregating metrics like engagement, click, and viewable rates, we generate a robust dataset that reflects the performance of each group, which can be leveraged for more targeted bidding.",
+            "code": {
+                "language": "python",
+                "content": "grouped_df = df.groupby(top_features).agg({\n    'engagement': 'sum', \n    'click': 'sum', \n    'viewable': 'sum', \n    'video_end': 'sum', \n    'video_start': 'sum', \n    'impression': 'sum'\n}).reset_index()\n\ngrouped_df['engagement_rate'] = grouped_df['engagement'] / (grouped_df['impression'] + 1e-10)\ngrouped_df['click_rate'] = grouped_df['click'] / (grouped_df['impression'] + 1e-10)\ngrouped_df['viewable_rate'] = grouped_df['viewable'] / (grouped_df['impression'] + 1e-10)\ngrouped_df['completion_rate'] = grouped_df['video_end'] / (grouped_df['video_start'] + 1e-10)\ngrouped_df['group_size'] = grouped_df['impression']\nprint(\"Grouped data with aggregated KPI rates:\")\ndisplay(grouped_df.head())"
+            }
+        }
+    ]
+}

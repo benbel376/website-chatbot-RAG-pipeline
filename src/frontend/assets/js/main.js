@@ -16,6 +16,7 @@ import { initInfiniteScroll } from './modules/infiniteScroll.js';
 import { initCollapse } from './modules/collapse.js';
 import FloatingChat from './modules/floatingChat.js';
 import initCertificationSlider from './modules/certificationSlider.js';
+import { initWelcomeOverlay } from './modules/welcomeOverlay.js';
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCollapse();
     FloatingChat.init();
     initCertificationSlider();
+    initWelcomeOverlay();
 
     // // Initialize summary loader with relative paths
     // const summaryLoader = new SummaryLoader({

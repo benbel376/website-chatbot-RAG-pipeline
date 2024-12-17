@@ -1,0 +1,20 @@
+{
+    "title": "Bidlist Optimization",
+    "subtitle": "Building a Bidlist Optimization Algorithm for Real-Time Bidding (RTB) on The Trade Desk (TTD)",
+    "banner": "bidlist-blog-banner.png",
+    "sections": [{
+            "type": "introduction",
+            "title": "Introduction",
+            "content": "In the fast-paced world of digital advertising, real-time bidding (RTB) is a key mechanism that enables advertisers to bid for ad impressions in real time. By optimizing bids to win the most valuable impressions, advertisers can improve engagement, drive conversions, and maximize their return on investment. However, effectively navigating RTB requires an algorithmic approach that can process and respond to large-scale data rapidly and adaptively.\n\nIn this blog, I'll walk through a project where I built a bidlist optimization algorithm tailored for RTB on The Trade Desk (TTD) platform. We'll go step-by-step through the code, covering data loading, feature engineering, scoring, and bid adjustment, ultimately creating an optimized bidlist that maximizes engagement within budget constraints. I'll also discuss how machine learning (ML) models could offer alternative approaches to certain stages of this pipeline."
+        },
+        {
+            "type": "section",
+            "title": "1. Data Loading and Cleaning",
+            "content": "The first step in any RTB algorithm is gathering data, as the bidlist will ultimately rely on a well-structured dataset. We start by connecting to Google BigQuery and importing data into a DataFrame. This table includes historical bid and ad performance data, providing a strong foundation for analyzing past trends and optimizing future bids.",
+            "code": {
+                "language": "python",
+                "content": "from google.cloud import bigquery\nimport os\n\nos.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/ben/googlecred.json'\nclient = bigquery.Client()\nquery = \"\"\"\n    SELECT *\n    FROM `learned-fusion-437423-c0.biddata.biddatatable`\n\"\"\"\nquery_job = client.query(query)\ndf = query_job.to_dataframe()\nprint(\"Initial Data:\")\ndisplay(df.head())"
+            }
+        }
+    ]
+}

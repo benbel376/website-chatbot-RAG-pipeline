@@ -1,4 +1,7 @@
 {
+    "config": {
+        "showProject": true
+    },
     "id": "topic-modeling",
     "title": "Topic Modeling",
     "category": "Machine Learning",

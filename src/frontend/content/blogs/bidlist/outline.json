@@ -1,0 +1,12 @@
+{
+    "config": {
+        "showBlog": true
+    },
+    "id": "bidlist",
+    "title": "Digital Ad Inventory Bidding",
+    "category": "Random",
+    "tags": ["End-to-end", "Machine Learning"],
+    "thumbnail": "bidlist.png",
+    "date": "2022-02-23",
+    "shortDescription": "Veritatis et quasi architecto beatae vitae dicta sunt, explicabo."
+}

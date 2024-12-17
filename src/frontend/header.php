@@ -94,9 +94,17 @@
   <!-- Add this near the end of your head section -->
   <link rel="stylesheet" href="./assets/css/floating-chat.css">
 
+  <!-- Add welcome overlay CSS -->
+  <link rel="stylesheet" href="./assets/css/welcome-overlay.css">
+
+  <!-- Add MedievalSharp font for welcome overlay -->
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
+  <!-- Include welcome overlay at the start of body -->
+  <?php include('welcome-overlay.php'); ?>
 
   <!-- #MAIN -->
   <main>
@@ -124,6 +132,3 @@
           </li>
         </ul>
       </nav>
-
-      <!-- Add this near the end of your body section, before the closing body tag -->
-      <?php include_once('./floating-chat.php'); ?>

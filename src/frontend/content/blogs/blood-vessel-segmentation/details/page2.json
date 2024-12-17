@@ -1,0 +1,21 @@
+{
+    "sections": [{
+            "type": "section",
+            "title": "2. Data Augmentation and Dataset Creation",
+            "content": "Medical imaging datasets are often limited in size. To improve model robustness and prevent overfitting, we implement comprehensive data augmentation strategies. This includes both spatial and intensity transformations while ensuring the augmentations maintain anatomical validity.",
+            "code": {
+                "language": "python",
+                "content": "from albumentations import (\n    Compose, HorizontalFlip, VerticalFlip, RandomRotate90,\n    ShiftScaleRotate, ElasticTransform, GridDistortion,\n    RandomBrightnessContrast\n)\n\ndef get_training_augmentation():\n    return Compose([\n        HorizontalFlip(p=0.5),\n        VerticalFlip(p=0.5),\n        RandomRotate90(p=0.5),\n        ShiftScaleRotate(\n            shift_limit=0.0625, scale_limit=0.1,\n            rotate_limit=45, p=0.5\n        ),\n        ElasticTransform(p=0.5),\n        GridDistortion(p=0.5),\n        RandomBrightnessContrast(p=0.5)\n    ])"
+            }
+        },
+        {
+            "type": "section",
+            "title": "3. U-Net Architecture Implementation",
+            "content": "We implement the U-Net architecture, which has proven highly effective for medical image segmentation tasks. The architecture consists of a contracting path (encoder) and an expansive path (decoder) with skip connections.",
+            "code": {
+                "language": "python",
+                "content": "import torch.nn as nn\n\nclass UNet(nn.Module):\n    def __init__(self, in_channels=3, out_channels=1):\n        super().__init__()\n        \n        # Encoder\n        self.enc1 = self.conv_block(in_channels, 64)\n        self.enc2 = self.conv_block(64, 128)\n        self.enc3 = self.conv_block(128, 256)\n        self.enc4 = self.conv_block(256, 512)\n        \n        # Decoder with skip connections\n        self.dec4 = self.upconv_block(512, 256)\n        self.dec3 = self.upconv_block(256, 128)\n        self.dec2 = self.upconv_block(128, 64)\n        self.dec1 = self.conv_block(64, out_channels)\n        \n    def forward(self, x):\n        # Implement forward pass with skip connections\n        pass"
+            }
+        }
+    ]
+}

@@ -47,7 +47,8 @@
     margin-bottom: 25px;
 }
 
-.hero-wrapper::after {
+
+/* .hero-wrapper::after {
     content: '';
     position: absolute;
     bottom: -20px;
@@ -55,9 +56,10 @@
     right: 50px;
     height: 1px;
     background: linear-gradient( to right, transparent, rgba(255, 255, 255, 0.1) 20%, rgba(255, 255, 255, 0.1) 80%, transparent);
-}
+} */
 
-.hero-wrapper::before {
+
+/* .hero-wrapper::before {
     content: '';
     position: absolute;
     bottom: -24px;
@@ -67,7 +69,7 @@
     height: 8px;
     background: var(--orange-yellow-crayola);
     box-shadow: -30px 0 0 -3px rgba(255, 255, 255, 0.1), 30px 0 0 -3px rgba(255, 255, 255, 0.1);
-}
+} */
 
 .hero+* {
     margin-top: 0;

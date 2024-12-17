@@ -1,0 +1,21 @@
+{
+    "sections": [{
+            "type": "section",
+            "title": "4. Loss Function and Training Pipeline",
+            "content": "For blood vessel segmentation, we implement a combination of Binary Cross-Entropy and Dice Loss. This hybrid loss function helps address class imbalance and promotes better boundary detection.",
+            "code": {
+                "language": "python",
+                "content": "class DiceBCELoss(nn.Module):\n    def __init__(self, weight=None, size_average=True):\n        super().__init__()\n        self.bce = nn.BCEWithLogitsLoss()\n\n    def forward(self, inputs, targets):\n        bce_loss = self.bce(inputs, targets)\n        \n        # Dice Loss calculation\n        inputs = torch.sigmoid(inputs)\n        intersection = (inputs * targets).sum()\n        dice_loss = 1 - (2. * intersection) / (\n            inputs.sum() + targets.sum() + 1e-8\n        )\n        \n        return 0.5 * bce_loss + 0.5 * dice_loss\n\n# Training loop\ndef train_epoch(model, loader, optimizer, criterion):\n    model.train()\n    epoch_loss = 0\n    \n    for images, masks in loader:\n        optimizer.zero_grad()\n        outputs = model(images)\n        loss = criterion(outputs, masks)\n        loss.backward()\n        optimizer.step()\n        epoch_loss += loss.item()"
+            }
+        },
+        {
+            "type": "section",
+            "title": "5. Model Evaluation Metrics",
+            "content": "We implement comprehensive evaluation metrics including Dice coefficient, IoU (Intersection over Union), and pixel-wise accuracy. These metrics help assess both the overall segmentation quality and boundary precision.",
+            "code": {
+                "language": "python",
+                "content": "def calculate_metrics(pred, target):\n    pred = torch.sigmoid(pred) > 0.5\n    pred = pred.float()\n    \n    # Dice coefficient\n    intersection = (pred * target).sum()\n    dice = (2. * intersection) / (\n        pred.sum() + target.sum() + 1e-8\n    )\n    \n    # IoU calculation\n    union = pred.sum() + target.sum() - intersection\n    iou = intersection / (union + 1e-8)\n    \n    return {\n        'dice': dice.item(),\n        'iou': iou.item(),\n        'accuracy': (pred == target).float().mean().item()\n    }"
+            }
+        }
+    ]
+}

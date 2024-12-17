@@ -1,0 +1,20 @@
+{
+    "title": "Blood Vessel Segmentation",
+    "subtitle": "Deep Learning for Medical Image Segmentation Using U-Net Architecture",
+    "banner": "image-segmentation-blog-banner.png",
+    "sections": [{
+            "type": "introduction",
+            "title": "Introduction",
+            "content": "Accurate blood vessel segmentation in medical images is crucial for diagnosing various cardiovascular conditions. This blog post details the development of a deep learning-based system for automated blood vessel segmentation using the U-Net architecture. We'll explore the entire pipeline from data preprocessing to model deployment, focusing on achieving high accuracy while maintaining computational efficiency.\n\nThe project demonstrates how modern deep learning techniques can be applied to medical image analysis, potentially improving diagnostic accuracy and reducing the manual workload for healthcare professionals."
+        },
+        {
+            "type": "section",
+            "title": "1. Data Preprocessing Pipeline",
+            "content": "The first step in building our segmentation system is creating a robust preprocessing pipeline. This involves handling medical image formats, implementing normalization techniques, and preparing paired training data.",
+            "code": {
+                "language": "python",
+                "content": "import numpy as np\nfrom PIL import Image\nfrom torchvision import transforms\n\ndef preprocess_image(image_path, mask_path):\n    # Load and normalize image\n    image = Image.open(image_path).convert('RGB')\n    mask = Image.open(mask_path).convert('L')\n    \n    # Define transformations\n    transform = transforms.Compose([\n        transforms.Resize((512, 512)),\n        transforms.ToTensor(),\n        transforms.Normalize([0.485, 0.456, 0.406], \n                         [0.229, 0.224, 0.225])\n    ])\n    \n    # Apply transformations\n    image = transform(image)\n    mask = transforms.ToTensor()(mask)\n    \n    return image, mask"
+            }
+        }
+    ]
+}

@@ -1,4 +1,7 @@
 {
+    "config": {
+        "showProject": true
+    },
     "id": "llm-finetuning",
     "title": "LLM Finetuning for Amharic",
     "category": "Machine Learning",

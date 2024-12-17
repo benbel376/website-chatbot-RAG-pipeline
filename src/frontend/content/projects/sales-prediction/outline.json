@@ -1,4 +1,7 @@
 {
+    "config": {
+        "showProject": true
+    },
     "id": "sales-prediction",
     "title": "Sales Prediction",
     "category": "Machine Learning",

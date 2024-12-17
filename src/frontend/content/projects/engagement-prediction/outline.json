@@ -1,4 +1,7 @@
 {
+    "config": {
+        "showProject": true
+    },
     "id": "engagement-prediction",
     "title": "Engagement Prediction",
     "category": "Machine Learning",

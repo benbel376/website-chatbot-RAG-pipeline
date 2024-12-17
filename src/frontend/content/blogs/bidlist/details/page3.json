@@ -1,0 +1,21 @@
+{
+    "sections": [{
+            "type": "section",
+            "title": "6. Enhanced Scoring System Using Bayesian Smoothing",
+            "content": "To achieve a more reliable performance metric for each group, we apply Bayesian smoothing to the calculated KPI rates. Bayesian smoothing adjusts rates based on group size, adding a level of stability to avoid overemphasizing smaller groups that might show high KPI rates due to limited data. This confidence-adjusted score, factoring in the group size and smoothing priors, offers a more balanced perspective on group performance and helps reduce the influence of extreme values.",
+            "code": {
+                "language": "python",
+                "content": "from scipy.stats import beta as beta_dist\n\ndef get_improved_scores(rate, group_size, alpha=0.05, beta=1.0):\n    prior_alpha = 1\n    prior_beta = 1\n    smoothed_rate = (rate * group_size + prior_alpha) / (group_size + prior_alpha + prior_beta + 1e-10)\n    volume_factor = 1 - np.exp(-alpha * group_size)\n    confidence = beta * (group_size / (group_size + 100))\n    score = smoothed_rate * volume_factor * confidence\n    return score / (np.max(score) + 1e-10)\n\ngrouped_df['engagement_score'] = get_improved_scores(grouped_df['engagement_rate'], grouped_df['group_size'])"
+            }
+        },
+        {
+            "type": "section",
+            "title": "7. Optimization with Budget Constraint",
+            "content": "Now that we have a stable scoring system, the next step is to optimize bid adjustments while adhering to a budget constraint. Our objective function maximizes total expected KPI actions by adjusting bid factors. This is achieved through a constrained optimization where total spend remains within budget. This ensures efficient budget usage while maximizing engagement, which is vital for successful RTB strategies.",
+            "code": {
+                "language": "python",
+                "content": "from scipy.optimize import minimize\n\ndef bid_adjustment(params, scores):\n    base_bid_factor, bid_multiplier = params\n    bid_factors = base_bid_factor * np.power(scores, bid_multiplier)\n    bid_factors = np.clip(bid_factors, min_bid_factor, max_bid_factor)\n    return bid_factors\n\nconstraints = {'type': 'ineq', 'fun': budget_constraint}\nresult = minimize(objective, initial_params, args=(grouped_df['score'].values, grouped_df['group_size'].values, base_conversion_rate), method='SLSQP', bounds=bounds, constraints=constraints)"
+            }
+        }
+    ]
+}

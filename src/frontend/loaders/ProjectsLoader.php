@@ -28,12 +28,11 @@ class ProjectsLoader {
             if (file_exists($outlinePath)) {
                 $content = file_get_contents($outlinePath);
                 $outline = json_decode($content, true);
-                if ($outline) {
+                if ($outline && isset($outline['config']['showProject']) && $outline['config']['showProject']) {
                     $projects[] = $outline;
                     error_log("Successfully loaded project: " . $outline['title']);
                 } else {
-                    error_log("Failed to decode JSON for: " . $outlinePath);
-                    error_log("JSON error: " . json_last_error_msg());
+                    error_log("Project skipped or failed to decode: " . $outlinePath);
                 }
             } else {
                 error_log("Outline file not found: " . $outlinePath);

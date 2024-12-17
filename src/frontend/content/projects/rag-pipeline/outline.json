@@ -1,4 +1,7 @@
 {
+    "config": {
+        "showProject": true
+    },
     "id": "rag-pipeline",
     "title": "RAG Pipeline",
     "category": "End-to-end",

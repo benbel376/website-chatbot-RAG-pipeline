@@ -96,28 +96,79 @@ export function initializeBlogs(containerId) {
     }
 
     function sortByDate(order) {
-        const sortedItems = Array.from(blogItems).sort((a, b) => {
+        const contentList = container.querySelector(".blog-posts-list");
+        const allItems = Array.from(blogItems);
+
+        allItems.forEach(item => item.classList.remove('active'));
+
+        const sortedItems = allItems.sort((a, b) => {
             const dateA = new Date(a.dataset.date);
             const dateB = new Date(b.dataset.date);
             return order === "asc" ? dateA - dateB : dateB - dateA;
         });
-        renderSortedItems(sortedItems);
+
+        contentList.innerHTML = "";
+        sortedItems.forEach((item) => {
+            contentList.appendChild(item);
+        });
+
+        reinitializePagination();
     }
 
     function sortByTitle(order) {
-        const sortedItems = Array.from(blogItems).sort((a, b) => {
+        const contentList = container.querySelector(".blog-posts-list");
+        const allItems = Array.from(blogItems);
+
+        allItems.forEach(item => item.classList.remove('active'));
+
+        const sortedItems = allItems.sort((a, b) => {
             const titleA = a.dataset.title ? a.dataset.title.toLowerCase() : '';
             const titleB = b.dataset.title ? b.dataset.title.toLowerCase() : '';
             return order === "asc" ? titleA.localeCompare(titleB) : titleB.localeCompare(titleA);
         });
-        renderSortedItems(sortedItems);
-    }
 
-    function renderSortedItems(sortedItems) {
-        const contentList = container.querySelector(".blog-posts-list");
         contentList.innerHTML = "";
         sortedItems.forEach((item) => {
             contentList.appendChild(item);
+        });
+
+        reinitializePagination();
+    }
+
+    function filterBlogs() {
+        const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+        const contentList = container.querySelector(".blog-posts-list");
+        const allItems = Array.from(blogItems);
+
+        allItems.forEach(item => item.classList.remove('active'));
+
+        const filteredItems = allItems.filter((blog) => {
+            const blogTags = blog.dataset.tags ? blog.dataset.tags.toLowerCase().split(",") : [];
+            const blogTitle = blog.dataset.title ? blog.dataset.title.toLowerCase() : '';
+
+            const matchesTags = selectedTags.length === 0 ||
+                selectedTags.every(tag => blogTags.includes(tag.toLowerCase()));
+            const matchesSearch = blogTitle.includes(searchTerm) ||
+                blogTags.some(tag => tag.includes(searchTerm));
+
+            return matchesTags && matchesSearch;
+        });
+
+        contentList.innerHTML = "";
+        filteredItems.forEach((item) => {
+            contentList.appendChild(item);
+        });
+
+        reinitializePagination();
+    }
+
+    function reinitializePagination() {
+        import ('./blogPagination.js').then(module => {
+            const existingPagination = document.querySelector('.blog-pagination');
+            if (existingPagination) {
+                existingPagination.remove();
+            }
+            module.initBlogPagination();
         });
     }
 
@@ -157,30 +208,12 @@ export function initializeBlogs(containerId) {
     // Search functionality
     function initializeSearch() {
         if (searchInput) {
-            searchInput.addEventListener('input', filterBlogs);
+            let searchTimeout;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(filterBlogs, 300);
+            });
         }
-    }
-
-    function filterBlogs() {
-        const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-
-        blogItems.forEach((blog) => {
-            const blogTags = blog.dataset.tags ? blog.dataset.tags.toLowerCase().split(",") : [];
-            const blogTitle = blog.dataset.title ? blog.dataset.title.toLowerCase() : '';
-
-            const matchesTags = selectedTags.length === 0 ||
-                selectedTags.every(tag => blogTags.includes(tag.toLowerCase()));
-            const matchesSearch = blogTitle.includes(searchTerm) ||
-                blogTags.some(tag => tag.includes(searchTerm));
-
-            if (matchesTags && matchesSearch) {
-                blog.classList.remove("hidden");
-                blog.classList.add("active");
-            } else {
-                blog.classList.add("hidden");
-                blog.classList.remove("active");
-            }
-        });
     }
 
     // Initialize all functionality

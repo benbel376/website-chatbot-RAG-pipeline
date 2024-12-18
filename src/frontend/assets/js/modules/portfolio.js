@@ -5,13 +5,12 @@ export function initializePortfolio(containerId) {
     if (!container) return;
 
     // Get references to all required elements
-    const projectItems = container.querySelectorAll(".content-item");
+    const projectItems = container.querySelectorAll(".project-post-item");
     const projectListSection = container.querySelector("[data-content-list]");
     const projectDetailsSection = container.querySelector("[data-content-details]");
     const goBackBtn = container.querySelector("[data-go-back]");
     const detailUnits = container.querySelectorAll(".details-unit");
-    const filterBtn = container.querySelectorAll("[data-filter-btn]");
-    const sortButtons = container.querySelectorAll(".sort-btn");
+    const sortButtons = container.querySelectorAll(".filter-sort-btn");
     const selectButton = container.querySelector('[data-select]');
     const selectValue = container.querySelector('[data-select-value]');
     const selectList = container.querySelector('.select-list');
@@ -36,22 +35,22 @@ export function initializePortfolio(containerId) {
             unit.hidden = true;
             unit.classList.remove("active");
         });
-        
+
         const targetDetail = container.querySelector(`#${contentId}-details`);
         if (targetDetail) {
             targetDetail.hidden = false;
             targetDetail.classList.add("active");
-            
+
             projectListSection.classList.add("hidden");
             projectDetailsSection.classList.add("active");
-            
+
             goBackBtn.hidden = false;
             goBackBtn.classList.add("visible");
         }
     }
 
     // Handle go back button click
-    goBackBtn.addEventListener("click", function () {
+    goBackBtn.addEventListener("click", function() {
         projectDetailsSection.classList.remove("active");
         projectListSection.classList.remove("hidden");
 
@@ -69,7 +68,7 @@ export function initializePortfolio(containerId) {
     // Sorting functionality
     function initializeSorting() {
         sortButtons.forEach((button) => {
-            button.addEventListener("click", function () {
+            button.addEventListener("click", function() {
                 const sortType = this.getAttribute("data-sort");
                 let sortOrder = this.getAttribute("data-order");
 
@@ -84,7 +83,7 @@ export function initializePortfolio(containerId) {
 
                 this.classList.remove("inactive");
                 this.classList.add("active");
-                this.querySelector("ion-icon").setAttribute("name", 
+                this.querySelector("ion-icon").setAttribute("name",
                     sortOrder === "asc" ? "arrow-up-outline" : "arrow-down-outline");
 
                 if (sortType === "date") {
@@ -124,23 +123,29 @@ export function initializePortfolio(containerId) {
 
     // Tag filtering functionality
     function initializeTagFiltering() {
-        selectButton?.addEventListener("click", function () {
-            this.classList.toggle('active');
-            selectList?.classList.toggle('active');
-        });
-
-        selectItems?.forEach((item) => {
-            item.addEventListener('change', function () {
-                const tag = this.value;
-                if (this.checked) {
-                    selectedTags.push(tag);
-                } else {
-                    selectedTags = selectedTags.filter(t => t !== tag);
+        if (selectButton) {
+            selectButton.addEventListener("click", function() {
+                this.classList.toggle('active');
+                if (selectList) {
+                    selectList.classList.toggle('active');
                 }
-                updateSelectValue();
-                filterProjects();
             });
-        });
+        }
+
+        if (selectItems) {
+            selectItems.forEach((item) => {
+                item.addEventListener('change', function() {
+                    const tag = this.value;
+                    if (this.checked) {
+                        selectedTags.push(tag);
+                    } else {
+                        selectedTags = selectedTags.filter(t => t !== tag);
+                    }
+                    updateSelectValue();
+                    filterProjects();
+                });
+            });
+        }
     }
 
     function updateSelectValue() {
@@ -151,20 +156,26 @@ export function initializePortfolio(containerId) {
 
     // Search functionality
     function initializeSearch() {
-        searchInput?.addEventListener('input', filterProjects);
+        if (searchInput) {
+            let searchTimeout;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(filterProjects, 300);
+            });
+        }
     }
 
     function filterProjects() {
-        const searchTerm = searchInput?.value.toLowerCase() || '';
+        const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
 
         projectItems.forEach((project) => {
             const projectTags = project.dataset.tags ? project.dataset.tags.toLowerCase().split(",") : [];
             const projectTitle = project.dataset.title ? project.dataset.title.toLowerCase() : '';
-            
-            const matchesTags = selectedTags.length === 0 || 
-                              selectedTags.every(tag => projectTags.includes(tag.toLowerCase()));
-            const matchesSearch = projectTitle.includes(searchTerm) || 
-                                projectTags.some(tag => tag.includes(searchTerm));
+
+            const matchesTags = selectedTags.length === 0 ||
+                selectedTags.every(tag => projectTags.includes(tag.toLowerCase()));
+            const matchesSearch = projectTitle.includes(searchTerm) ||
+                projectTags.some(tag => tag.includes(searchTerm));
 
             if (matchesTags && matchesSearch) {
                 project.classList.add("active");

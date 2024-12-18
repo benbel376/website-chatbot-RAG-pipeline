@@ -86,7 +86,6 @@ class BlogLoader {
                         <div class='blog-content'>
                             <div class='blog-meta'>
                                 <p class='blog-category content-category'>{$blog['category']}</p>
-                                <span class='dot'></span>
                                 <time class='blog-date content-date' datetime='{$blog['date']}'>" . 
                                     date('M j, Y', strtotime($blog['date'])) . 
                                 "</time>

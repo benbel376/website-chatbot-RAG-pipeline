@@ -14,7 +14,7 @@ error_log("Loaded " . count($blogs) . " blogs");
 
 <article id="blog-container" class="blog-container" data-page="blog">
     <header class="list-details-header">
-        <h2 class="section-title article-title">Blog</h2>
+        <h2 class="h2 article-title">Blog</h2>
         <button class="go-back-btn" data-go-back hidden>
             <ion-icon name="arrow-back-outline"></ion-icon>
             Go Back

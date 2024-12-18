@@ -19,7 +19,7 @@ echo "<!-- Loaded " . count($projects) . " projects -->\n";
 
 <article id="portfolio-container" class="portfolio-container" data-page="projects">
     <header class="list-details-header">
-        <h2 class="section-title article-title">Projects</h2>
+        <h2 class="h2 article-title">Projects</h2>
         <button class="go-back-btn" data-go-back hidden>
             <ion-icon name="arrow-back-outline"></ion-icon>
             Go Back
@@ -85,7 +85,7 @@ echo "<!-- Loaded " . count($projects) . " projects -->\n";
         </div>
 
         <!-- Projects List -->
-        <ul class="project-list content-list-items">
+        <ul class="content-list-items">
             <?php 
             $projectsList = $projectsLoader->renderProjectsList($projects);
             error_log("Rendered projects list. Length: " . strlen($projectsList));

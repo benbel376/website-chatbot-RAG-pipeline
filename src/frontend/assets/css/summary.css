@@ -3,7 +3,6 @@
 .resume-button {
     font-size: var(--fs-5);
     color: black;
-    margin-top: 100px;
     background: var(--orange-yellow-crayola);
     padding: 8px 15px;
     border-radius: 5px;
@@ -12,6 +11,7 @@
     transition: background var(--transition-1), color var(--transition-1);
     text-align: center;
     line-height: 1.2;
+    margin-top: 0;
 }
 
 .resume-button:hover {
@@ -231,7 +231,7 @@
 
 @media (min-width: 450px) {
     .resume-button {
-        margin-top: -50px;
+        margin-top: 0;
         font-size: 17px;
     }
 }
@@ -281,6 +281,6 @@
     .resume-button {
         font-size: var(--fs-5);
         color: black;
-        margin-top: 0px;
+        margin-top: 0;
     }
 }

@@ -71,7 +71,7 @@ class ProjectsLoader {
         foreach ($projects as $project) {
             $tags = implode(',', $project['tags']);
             $projectItems .= "
-                <li class='project-item content-item active' 
+                <li class='project-post-item content-item active' 
                     data-filter-item 
                     data-category='{$project['category']}'
                     data-filter-item 
@@ -79,18 +79,22 @@ class ProjectsLoader {
                     data-date='{$project['date']}'
                     data-title='{$project['title']}'
                     data-content-id='{$project['id']}'>
-                    <a href='#'>
-                        <figure class='project-img content-img'>
-                            <div class='project-item-icon-box content-item-icon-box'>
-                                <ion-icon name='eye-outline'></ion-icon>
-                            </div>
+                    <a href='#' class='project-card'>
+                        <figure class='project-banner-box'>
                             <img src='./{$this->imagesPath}/projects/{$project['thumbnail']}' 
                                  alt='{$project['title']}' 
                                  loading='lazy'>
+                            <ion-icon name='eye-outline'></ion-icon>
                         </figure>
-                        <h3 class='project-title content-title'>{$project['title']}</h3>
-                        <p class='project-category content-category'>{$project['category']}</p>
-                        <p class='project-date content-date'>" . date('F j, Y', strtotime($project['date'])) . "</p>
+                        <div class='project-content'>
+                            <div class='project-meta'>
+                                <time class='project-date' datetime='{$project['date']}'>" . 
+                                    date('M j, Y', strtotime($project['date'])) . 
+                                "</time>
+                            </div>
+                            <h3 class='project-title'>{$project['title']}</h3>
+                            <p class='project-text'>{$project['shortDescription']}</p>
+                        </div>
                     </a>
                 </li>
             ";

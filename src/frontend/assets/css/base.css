@@ -501,6 +501,10 @@ main {
     color: var(--orange-yellow-crayola);
 }
 
+.content-list {
+    margin-top: 40px;
+}
+
 
 /* Add these responsive styles at the bottom of base.css */
 

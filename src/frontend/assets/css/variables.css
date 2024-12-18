@@ -42,7 +42,7 @@
    * typography
    */
     /* font-family */
-    --ff-poppins: 'Geist Mono', 'Poppins', 'Sono', 'Noto Sans', sans-serif;
+    --ff-poppins: 'Geist Mono', 'muli', 'Poppins', 'Sono', 'Noto Sans', sans-serif;
     --ff-roboto: 'Roboto Mono', monospace;
     /* font-size */
     --fs-1: 28px;

@@ -1,0 +1,21 @@
+{
+    "sections": [{
+            "type": "section",
+            "title": "2. Vector Store Integration",
+            "content": "After processing documents into chunks, we need an efficient way to store and retrieve them. This is where vector stores come in, allowing for semantic search capabilities. We'll use FAISS as our vector store, which provides fast similarity search for dense vectors.",
+            "code": {
+                "language": "python",
+                "content": "from langchain.embeddings import HuggingFaceEmbeddings\nfrom langchain.vectorstores import FAISS\n\n# Initialize embedding model\nembedding_model = HuggingFaceEmbeddings(\n    model_name='sentence-transformers/all-mpnet-base-v2'\n)\n\n# Create vector store\nvector_store = FAISS.from_documents(\n    documents=chunks,\n    embedding=embedding_model\n)\n\n# Save vector store\nvector_store.save_local('faiss_index')"
+            }
+        },
+        {
+            "type": "section",
+            "title": "3. Query Processing and Context Retrieval",
+            "content": "When a query comes in, we need to process it and retrieve relevant context from our vector store. This involves converting the query into an embedding and performing similarity search to find the most relevant document chunks.",
+            "code": {
+                "language": "python",
+                "content": "def retrieve_context(query: str, k: int = 3) -> List[Document]:\n    # Convert query to embedding and search\n    relevant_chunks = vector_store.similarity_search(\n        query=query,\n        k=k  # Number of chunks to retrieve\n    )\n    \n    # Format context for the LLM\n    context = '\\n\\n'.join([chunk.page_content for chunk in relevant_chunks])\n    return context"
+            }
+        }
+    ]
+}

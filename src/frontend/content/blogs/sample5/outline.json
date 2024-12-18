@@ -1,0 +1,12 @@
+{
+    "config": {
+        "showBlog": true
+    },
+    "id": "rag-pipeline",
+    "title": "Building a RAG Pipeline",
+    "category": "Machine Learning",
+    "tags": ["End-to-end", "Machine Learning", "NLP"],
+    "thumbnail": "rag-pipeline.png",
+    "date": "2023-06-30",
+    "shortDescription": "A comprehensive guide to building a Retrieval-Augmented Generation (RAG) pipeline for efficient document processing and question answering"
+}

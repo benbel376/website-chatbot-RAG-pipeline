@@ -41,7 +41,8 @@
 * blogs page styles
 */
 
-@import 'blogs.css';
+@import 'blog-controls.css';
+@import 'blog-cards.css';
 @import 'blog-details.css';
 
 /**
@@ -49,5 +50,8 @@
 */
 
 @import 'contact.css';
+
+/* @import 'utilities.css'; */
+
 
 /* @import 'utilities.css'; */

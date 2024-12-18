@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sono:wght@200..800&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://use.typekit.net/ayf4vob.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,11 +100,14 @@
   <!-- Add MedievalSharp font for welcome overlay -->
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="./assets/css/blog-controls.css">
+
+  <!-- Add this before closing </head> tag -->
+  <script src="./assets/js/blog-pagination.js"></script>
+
 </head>
 
 <body>
-  <!-- Include welcome overlay at the start of body -->
-  <?php include('welcome-overlay.php'); ?>
 
   <!-- #MAIN -->
   <main>

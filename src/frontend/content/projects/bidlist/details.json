@@ -1,67 +1,156 @@
 {
-    "title": "Digital Ad Inventory Bidding",
-    "subtitle": "Building a Bidlist Optimization Algorithm for Real-Time Bidding (RTB) on The Trade Desk (TTD)",
-    "description": "The objective of this project was to design a scalable, data-driven bidlist optimization algorithm for real-time bidding (RTB) on The Trade Desk (TTD) platform. This algorithm processes ad inventory data to select optimal bids, maximizing engagement and performance within budget constraints. The project involved creating a robust data pipeline that extracts, cleans, and transforms RTB data to develop a scoring system that prioritizes inventory based on key performance indicators (KPIs) such as engagement rate and click-through rate. The result is a streamlined, effective bidlist generation that enhances targeting and ROI for advertisers.",
-    "date": "October 29, 2024",
-    "requirements": [
-        "Linux",
-        "Python 3.8 or higher",
-        "Google Cloud SDK",
-        "Docker",
-        "Docker Compose",
-        "BigQuery and Service Account setup"
-    ],
-    "technologies": [
-        "Python",
-        "Google BigQuery",
-        "Pandas and NumPy",
-        "Scikit-Learn",
-        "SQLAlchemy",
-        "Docker",
-        "PostgreSQL",
-        "Scipy for Optimization",
-        "JSON for Data Export"
-    ],
-    "projectStructure": {
-        "name": "Bidlist Optimization Project",
-        "folders": [{
-            "name": "src",
-            "size": "200 KB",
-            "subfolders": [{
-                    "name": "data",
-                    "size": "20 KB",
-                    "files": [{
-                        "name": "biddatatable.csv",
-                        "description": "Sample Data"
-                    }]
-                },
-                {
-                    "name": "scripts",
-                    "size": "100 KB",
-                    "files": [{
-                            "name": "bidlist_optimization.py",
-                            "description": "Main Script"
+    "metadata": {
+        "version": "2",
+        "lastUpdated": "2024-03-20"
+    },
+    "content": {
+        "hero": {
+            "loader": "hero-loader",
+            "version": "1",
+            "value": {
+                "banner": "bidlist.jpg",
+                "title": "Digital Ad Inventory Bidding"
+            }
+        },
+        "overview": {
+            "loader": "overview-loader",
+            "version": "1",
+            "value": {
+                "description": "The objective of this project was to design a scalable, data-driven bidlist optimization algorithm for real-time bidding (RTB) on The Trade Desk (TTD) platform...",
+                "keyFeatures": [{
+                        "title": "Real-time Optimization",
+                        "description": "Dynamic bid adjustment based on real-time performance metrics",
+                        "icon": "flash-outline"
+                    },
+                    {
+                        "title": "Machine Learning Pipeline",
+                        "description": "Automated feature engineering and model retraining",
+                        "icon": "brain-outline"
+                    },
+                    {
+                        "title": "Scalable Architecture",
+                        "description": "Handles millions of bid requests per second",
+                        "icon": "layers-outline"
+                    }
+                ],
+                "problem": "Traditional bidding systems lack real-time optimization capabilities, leading to inefficient ad spend and suboptimal campaign performance.",
+                "solution": "Developed an ML-powered system that dynamically adjusts bids based on real-time performance data and historical patterns."
+            }
+        },
+        "technologies": {
+            "loader": "tech-loader",
+            "version": "1",
+            "value": [
+                "Linux",
+                "Python 3.8+",
+                "Google Cloud SDK",
+                "Docker",
+                "Docker Compose",
+                "BigQuery",
+                "Pandas and NumPy",
+                "Scikit-Learn",
+                "SQLAlchemy",
+                "PostgreSQL",
+                "Scipy",
+                "Apache Spark"
+            ]
+        },
+        "projectStructure": {
+            "loader": "structure-loader",
+            "version": "1",
+            "value": {
+                "name": "Bidlist Optimization Project",
+                "folders": [{
+                    "name": "src",
+                    "size": "200 KB",
+                    "subfolders": [{
+                            "name": "data",
+                            "size": "20 KB",
+                            "files": [{
+                                "name": "biddatatable.csv",
+                                "description": "Sample Data"
+                            }]
                         },
                         {
-                            "name": "feature_selection.py",
-                            "description": "Feature Engineering"
+                            "name": "scripts",
+                            "size": "100 KB",
+                            "files": [{
+                                    "name": "bidlist_optimization.py",
+                                    "description": "Main Script"
+                                },
+                                {
+                                    "name": "feature_selection.py",
+                                    "description": "Feature Engineering"
+                                }
+                            ]
+                        }
+                    ],
+                    "files": [{
+                            "name": "README.md",
+                            "type": "html5"
+                        },
+                        {
+                            "name": "requirements.txt",
+                            "type": "file-code-o"
                         }
                     ]
+                }]
+            }
+        },
+        "showcase": {
+            "loader": "showcase-loader",
+            "version": "1",
+            "value": {
+                "images": [{
+                        "url": "dashboard-overview.png",
+                        "caption": "Real-time bidding dashboard showing key metrics",
+                        "type": "screenshot"
+                    },
+                    {
+                        "url": "architecture-diagram.png",
+                        "caption": "System architecture and data flow",
+                        "type": "diagram"
+                    }
+                ],
+                "videos": [{
+                    "url": "bidding-demo.mp4",
+                    "caption": "Demo of the real-time bidding process",
+                    "thumbnail": "bidding-demo-thumb.jpg"
+                }]
+            }
+        },
+        "repository": {
+            "loader": "repo-loader",
+            "version": "1",
+            "value": {
+                "url": "https://github.com/your-username/bidlist-optimization",
+                "label": "Bidlist Optimization on GitHub",
+                "stats": {
+                    "stars": 45,
+                    "forks": 12,
+                    "contributors": 3
                 }
-            ],
-            "files": [{
-                    "name": "README.md",
-                    "type": "html5"
-                },
-                {
-                    "name": "requirements.txt",
-                    "type": "file-code-o"
-                }
-            ]
-        }]
-    },
-    "repository": {
-        "url": "https://github.com/your-username/bidlist-optimization",
-        "label": "Bidlist Optimization on GitHub"
+            }
+        },
+        "codeBlocks": {
+            "loader": "code-loader",
+            "version": "1",
+            "value": {
+                "title": "Key Implementation Highlights",
+                "blocks": [{
+                        "title": "Bid Optimization Algorithm",
+                        "language": "python",
+                        "highlights": [3, 4, 5, 6, 14],
+                        "code": "def optimize_bid(bid_data, performance_metrics):\n    # Calculate bid adjustment factor\n    adjustment = calculate_adjustment_factor(\n        performance_metrics['conversion_rate'],\n        performance_metrics['win_rate'],\n        performance_metrics['roi']\n    )\n    \n    # Apply constraints\n    max_adjustment = 1.5  # Maximum 50% increase\n    min_adjustment = 0.5  # Maximum 50% decrease\n    \n    # Bound the adjustment\n    bounded_adjustment = max(min(adjustment, max_adjustment), min_adjustment)\n    \n    # Calculate final bid\n    optimized_bid = bid_data['base_bid'] * bounded_adjustment\n    \n    return round(optimized_bid, 2)"
+                    },
+                    {
+                        "title": "Feature Engineering Pipeline",
+                        "language": "python",
+                        "highlights": [8, 9, 10],
+                        "code": "class FeatureProcessor:\n    def __init__(self, config):\n        self.config = config\n        self.scaler = StandardScaler()\n    \n    def create_features(self, raw_data):\n        features = {\n            'time_features': self._extract_temporal_features(raw_data),\n            'performance_features': self._calculate_performance_metrics(raw_data),\n            'market_features': self._extract_market_signals(raw_data)\n        }\n        \n        return self._combine_features(features)"
+                    }
+                ]
+            }
+        }
     }
 }

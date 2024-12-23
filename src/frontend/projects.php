@@ -3,10 +3,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once 'loaders/ProjectsLoader.php';
+require_once 'loaders/ProjectDetailsLoader.php';
 
 // Debug log
-error_log("Initializing ProjectsLoader");
+error_log("Initializing Loaders");
 $projectsLoader = new ProjectsLoader();
+$projectDetailsLoader = new ProjectDetailsLoader();
 
 // Debug log
 error_log("Loading all projects");
@@ -99,7 +101,7 @@ echo "<!-- Loaded " . count($projects) . " projects -->\n";
         <?php
         foreach ($projects as $project) {
             error_log("Rendering details for project: " . $project['id']);
-            echo $projectsLoader->renderProjectDetails($project['id']);
+            echo $projectDetailsLoader->renderProjectDetails($project['id']);
         }
         ?>
     </section>

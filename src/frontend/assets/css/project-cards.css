@@ -14,7 +14,6 @@
 
 .project-post-item {
     background: var(--bg-gradient-jet);
-    border: 1px solid var(--jet);
     border-radius: var(--radius-16);
     box-shadow: var(--shadow-1);
     transition: var(--transition-1);

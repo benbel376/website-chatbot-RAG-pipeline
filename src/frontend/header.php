@@ -105,6 +105,8 @@
   <!-- Add this before closing </head> tag -->
   <script src="./assets/js/blog-pagination.js"></script>
 
+  <!-- Add this line with your other CSS imports -->
+
 </head>
 
 <body>
@@ -122,7 +124,7 @@
       <nav class="navbar">
         <ul class="navbar-list">
           <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>Profile</button>
+            <button class="navbar-link active" data-nav-link>Profile</button>
           </li>
           <li class="navbar-item">
             <button class="navbar-link" data-nav-link>Projects</button>
@@ -130,8 +132,21 @@
           <li class="navbar-item">
             <button class="navbar-link" data-nav-link>Blog</button>
           </li>
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Let's chat</button>
+          
+          <!-- Social Icons -->
+          <li class="navbar-social">
+            <a href="#" class="hero__icon">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+            <a href="#" class="hero__icon">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+            <a href="#" class="hero__icon">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+            <a href="#" class="hero__icon">
+              <ion-icon name="mail-outline"></ion-icon>
+            </a>
           </li>
         </ul>
       </nav>

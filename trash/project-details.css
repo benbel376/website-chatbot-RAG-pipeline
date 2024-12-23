@@ -1,0 +1,131 @@
+/*-----------------------------------*\
+  #PROJECT DETAILS
+\*-----------------------------------*/
+
+
+/* Project Hero Section */
+
+.project-hero-section {
+    position: relative;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.project-hero-banner {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--radius-16);
+    overflow: hidden;
+}
+
+.project-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient( to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.8));
+}
+
+.project-hero-content {
+    position: relative;
+    padding: 2rem;
+    color: var(--light-gray);
+    max-width: 1030px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.project-hero-title {
+    font-size: var(--fs-1);
+    font-weight: var(--fw-700);
+    margin-bottom: 1rem;
+    color: var(--white);
+}
+
+.project-hero-description {
+    font-size: var(--fs-4);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.project-hero-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.project-tech-tag {
+    background: var(--jet);
+    color: var(--white);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-12);
+    font-size: var(--fs-7);
+    transition: var(--transition-1);
+}
+
+.project-tech-tag:hover {
+    background: var(--primary);
+}
+
+.project-hero-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.project-hero-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: var(--white);
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius-12);
+    font-size: var(--fs-6);
+    transition: var(--transition-1);
+}
+
+.project-hero-link.github {
+    background: var(--jet);
+}
+
+.project-hero-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-hero-link ion-icon {
+    font-size: 1.2em;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+    .project-hero-banner {
+        height: 300px;
+    }
+    .project-hero-content {
+        padding: 1.5rem;
+    }
+    .project-hero-title {
+        font-size: var(--fs-2);
+    }
+    .project-hero-description {
+        font-size: var(--fs-5);
+    }
+    .project-hero-links {
+        flex-direction: column;
+    }
+    .project-hero-link {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -3,8 +3,7 @@
         "version": "2",
         "lastUpdated": "2024-03-20"
     },
-    "content": {
-        "hero": {
+    "sections": [{
             "loader": "hero-loader",
             "version": "1",
             "value": {
@@ -12,7 +11,7 @@
                 "title": "Digital Ad Inventory Bidding"
             }
         },
-        "overview": {
+        {
             "loader": "overview-loader",
             "version": "1",
             "value": {
@@ -37,7 +36,7 @@
                 "solution": "Developed an ML-powered system that dynamically adjusts bids based on real-time performance data and historical patterns."
             }
         },
-        "technologies": {
+        {
             "loader": "tech-loader",
             "version": "1",
             "value": [
@@ -55,7 +54,7 @@
                 "Apache Spark"
             ]
         },
-        "projectStructure": {
+        {
             "loader": "structure-loader",
             "version": "1",
             "value": {
@@ -97,7 +96,7 @@
                 }]
             }
         },
-        "showcase": {
+        {
             "loader": "showcase-loader",
             "version": "1",
             "value": {
@@ -119,7 +118,7 @@
                 }]
             }
         },
-        "repository": {
+        {
             "loader": "repo-loader",
             "version": "1",
             "value": {
@@ -132,7 +131,7 @@
                 }
             }
         },
-        "codeBlocks": {
+        {
             "loader": "code-loader",
             "version": "1",
             "value": {
@@ -152,5 +151,5 @@
                 ]
             }
         }
-    }
+    ]
 }

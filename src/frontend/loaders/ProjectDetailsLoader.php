@@ -11,7 +11,7 @@ class ProjectDetailsLoader {
     public function loadProjectDetails($projectId) {
         $detailsPath = __DIR__ . "/../{$this->contentPath}/projects/{$projectId}/details.json";
         error_log("Loading details for project: " . $projectId);
-        
+
         if (!file_exists($detailsPath)) {
             error_log("Project details not found: {$detailsPath}");
             return null;
@@ -19,24 +19,25 @@ class ProjectDetailsLoader {
 
         $content = file_get_contents($detailsPath);
         $details = json_decode($content, true);
-        
+
         if ($details === null) {
             error_log("Failed to decode JSON for details: " . $detailsPath);
             return null;
         }
 
-        // Support both old and new formats
-        if (isset($details['metadata']) && $details['metadata']['version'] === '2') {
-            return $this->processNewFormatDetails($details);
-        }
-
-        return $details; // Return original format for backward compatibility
+        // Always process new format details
+        return $this->processNewFormatDetails($details);
     }
 
     private function processNewFormatDetails($details) {
         $processed = [];
-        foreach ($details['content'] as $key => $field) {
-            $processed[$key] = $this->loadContentField($field);
+        if (!isset($details['sections'])) {
+            return $processed;
+        }
+
+        foreach ($details['sections'] as $section) {
+            $section['value'] = $this->loadContentField($section);
+            $processed[] = $section;
         }
         return $processed;
     }
@@ -52,60 +53,51 @@ class ProjectDetailsLoader {
         $details = $this->loadProjectDetails($projectId);
         if (!$details) return '';
 
-        // Support both old and new formats
-        if (isset($details['hero'])) {
-            // New format
-            return $this->renderNewFormatDetails($projectId, $details);
+        // Always use new format rendering
+        return $this->renderNewFormatDetails($projectId, $details);
+    }
+
+    private function renderNewFormatDetails($projectId, $sections) {
+        $output = "<div class='detail-unit details-unit' id='{$projectId}-details' hidden>";
+        foreach ($sections as $section) {
+            $output .= $this->renderSection($section);
         }
-
-        // Old format - maintain backward compatibility
-        return $this->renderOldFormatDetails($projectId, $details);
+        $output .= "</div>";
+        return $output;
     }
 
-    private function renderNewFormatDetails($projectId, $details) {
-        return "
-            <div class='detail-unit details-unit' id='{$projectId}-details' hidden>
-                {$this->renderHeroSection($details['hero'])}
-                {$this->renderOverviewSection($details['overview'])}
-                {$this->renderTechnologiesSection($details['technologies'])}
-                " . (isset($details['codeBlocks']) ? $this->renderCodeBlocks($details['codeBlocks']) : '') . "
-                {$this->renderProjectStructure($details['projectStructure'])}
-                {$this->renderShowcaseSection($details['showcase'])}
-                {$this->renderRepositorySection($details['repository'])}
-            </div>
-        ";
+    private function renderSection($section) {
+        $loader = $section['loader'] ?? null;
+        if (!$loader) return '';
+
+        // Render based on loader
+        switch ($loader) {
+            case 'hero-loader':
+                return $this->renderHeroSection($section['value']);
+            case 'overview-loader':
+                return $this->renderOverviewSection($section['value']);
+            case 'tech-loader':
+                return $this->renderTechnologiesSection($section['value']);
+            case 'structure-loader':
+                return $this->renderProjectStructure($section['value']);
+            case 'showcase-loader':
+                return $this->renderShowcaseSection($section['value']);
+            case 'repo-loader':
+                return $this->renderRepositorySection($section['value']);
+            case 'code-loader':
+                return $this->renderCodeBlocks($section['value']);
+            default:
+                // Ignore unknown loader types or handle as needed
+                return '';
+        }
     }
 
-    private function renderOldFormatDetails($projectId, $details) {
-        // Maintain the original rendering logic for backward compatibility
-        $subtitle = $details['subtitle'] ?? '';
-        $description = $details['description'] ?? '';
-        $date = $details['date'] ?? '';
-        $technologies = $details['technologies'] ?? [];
-        $projectStructure = $details['projectStructure'] ?? null;
-        $repository = $details['repository'] ?? ['url' => '#', 'label' => 'View Project'];
-
-        return "
-            <div class='detail-unit details-unit' id='{$projectId}-details' hidden>
-                <div class='detail-section'>
-                    <h2 class='project-detail-title'>{$details['title']}</h2>
-                    " . ($subtitle ? "<h3 class='project-detail-subtitle'>{$subtitle}</h3>" : "") . "
-                    " . ($description ? "<p class='project-detail-description'>{$description}</p>" : "") . "
-                    " . ($date ? "<p class='project-detail-date'>Date: {$date}</p>" : "") . "
-                </div>
-                " . $this->renderTechnologiesSection($technologies) . "
-                " . ($projectStructure ? $this->renderProjectStructure($projectStructure) : "") . "
-                " . $this->renderRepositorySection($repository) . "
-            </div>
-        ";
-    }
-
-    // Add individual section rendering methods...
     private function renderHeroSection($hero) {
+        if (!$hero) return '';
         return "
             <div class='project-hero-wrapper'>
                 <section class='project-hero-section'>
-                    <div class='project-hero-banner' style='background-image: url(./assets/images/projects/{$hero['banner']})'>
+                    <div class='project-hero-banner' style='background-image: url(./assets/images/projects/{$hero['banner']}')>
                         <div class='project-hero-overlay'></div>
                         <div class='project-hero-content'>
                             <h1 class='project-hero-title'>{$hero['title']}</h1>
@@ -120,15 +112,17 @@ class ProjectDetailsLoader {
         if (!$overview) return '';
 
         $keyFeatures = '';
-        foreach ($overview['keyFeatures'] as $feature) {
-            $keyFeatures .= "
-                <div class='overview-feature'>
-                    <div class='feature-content'>
-                        <h4>{$feature['title']}</h4>
-                        <p>{$feature['description']}</p>
+        if (!empty($overview['keyFeatures'])) {
+            foreach ($overview['keyFeatures'] as $feature) {
+                $keyFeatures .= "
+                    <div class='overview-feature'>
+                        <div class='feature-content'>
+                            <h4>{$feature['title']}</h4>
+                            <p>{$feature['description']}</p>
+                        </div>
                     </div>
-                </div>
-            ";
+                ";
+            }
         }
 
         return "
@@ -275,7 +269,7 @@ class ProjectDetailsLoader {
             }
             $html .= "</div>";
             $html .= "</summary>";
-            
+
             $html .= "<ul>";
 
             // Render subfolders
@@ -326,11 +320,11 @@ class ProjectDetailsLoader {
             function toggleDescription(event, button) {
                 event.preventDefault();
                 event.stopPropagation();
-                
+
                 const fileItem = button.closest('.file-item');
                 const descriptionContent = fileItem.querySelector('.description-content');
                 const isExpanded = descriptionContent.classList.contains('expanded');
-                
+
                 // Close all other open descriptions
                 document.querySelectorAll('.description-content.expanded').forEach(content => {
                     if (content !== descriptionContent) {
@@ -339,7 +333,7 @@ class ProjectDetailsLoader {
                         otherButton.innerHTML = '<ion-icon name=\"information-circle-outline\"></ion-icon>';
                     }
                 });
-                
+
                 if (!isExpanded) {
                     descriptionContent.classList.add('expanded');
                     button.innerHTML = '<ion-icon name=\"close-circle-outline\"></ion-icon>';
@@ -387,7 +381,7 @@ class ProjectDetailsLoader {
         foreach ($slides as $index => $slide) {
             $isActive = $index === 0 ? 'active' : '';
             $slidesHtml .= "<div class='showcase-slide {$isActive}'>";
-            
+
             if ($slide['type'] === 'image') {
                 $slidesHtml .= "
                     <div class='showcase-media'>
@@ -405,7 +399,7 @@ class ProjectDetailsLoader {
                     </div>
                 ";
             }
-            
+
             $slidesHtml .= "
                 <div class='showcase-caption'>
                     <p>{$slide['caption']}</p>

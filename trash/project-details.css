@@ -106,6 +106,46 @@
 }
 
 
+/* Syntax Highlighting */
+
+.keyword {
+    color: #C770FF;
+    /* example lavender for keywords */
+    font-weight: bold;
+}
+
+.builtin {
+    color: #4CD19D;
+    /* example greenish for builtins */
+}
+
+.number {
+    color: #F6C177;
+    /* example amber for numbers */
+}
+
+.string {
+    color: #E3B341;
+    /* example gold for strings */
+}
+
+.comment {
+    color: #83838A;
+    /* muted gray for comments */
+    font-style: italic;
+}
+
+.operator {
+    color: #FF80B8;
+    /* pinkish for operators */
+}
+
+.space {
+    white-space: pre;
+    /* preserve spaces properly */
+}
+
+
 /* Responsive Design */
 
 @media (max-width: 768px) {

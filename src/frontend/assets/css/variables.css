@@ -14,7 +14,7 @@
     --border-gradient-onyx: linear-gradient( to bottom right, hsl(0, 0%, 25%) 0%, hsla(0, 0%, 25%, 0) 50%);
     --text-gradient-yellow: linear-gradient( to right, hsl(45, 100%, 72%), hsl(35, 100%, 68%));
     /* solid colors */
-    --jet: hsl(0, 0%, 22%);
+    --jet: hsl(0, 0%, 20%);
     --onyx: hsl(240, 1%, 17%);
     --eerie-black-1: hsl(240, 2%, 13%);
     --eerie-black-2: hsl(240, 2%, 12%);
@@ -27,6 +27,8 @@
     --light-gray: hsl(0, 0%, 84%);
     --light-gray-70: hsla(0, 0%, 84%, 0.7);
     --bittersweet-shimmer: hsl(0, 43%, 51%);
+    --cornflower-blue: hsl(218, 77%, 73%);
+    --sage: hsl(155, 20%, 67%);
     /* opacity colors */
     --card-bg: #2b2b2c;
     --overlay-bg-25: hsla(0, 0%, 0%, 0.25);
@@ -287,4 +289,5 @@
     /* colors */
     --color-success: #0b941b;
     --color-disabled: #7f96ae;
+    --light-blue: hsl(200, 75%, 65%);
 }

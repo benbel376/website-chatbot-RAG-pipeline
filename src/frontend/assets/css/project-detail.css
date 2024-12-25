@@ -1425,7 +1425,8 @@
 }
 
 .decorator {
-    color: #FF79C6;
+    color: #C586C0;
+    font-style: italic;
 }
 
 .parameter {
@@ -1525,8 +1526,8 @@
 }
 
 .code-line .operator {
-    color: #D4D4D4;
-    /* Light gray for operators */
+    color: var(--orange-yellow-crayola);
+    font-weight: var(--fw-500);
 }
 
 .code-line .number {
@@ -1552,6 +1553,7 @@
 .code-line .variable {
     color: #9CDCFE;
     /* Light blue for variables */
+    font-weight: bold;
 }
 
 .code-line .parameter {
@@ -1562,6 +1564,27 @@
 .code-line .decorator {
     color: #C586C0;
     /* Purple for decorators */
+    font-style: italic;
+}
+
+.code-line .delimiter {
+    color: var(--light-gray);
+}
+
+.code-line .text {
+    color: var(--light-gray);
+}
+
+.code-line .indent {
+    white-space: pre;
+}
+
+
+/* Highlight styling for code lines */
+
+.code-line.highlight {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--orange-yellow-crayola);
 }
 
 
@@ -1585,157 +1608,6 @@
 }
 
 
-/* Code Block Header */
-
-.code-block-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.5rem;
-    background: var(--eerie-black-2);
-    border-bottom: 1px solid var(--jet);
-}
-
-.code-block-title {
-    color: var(--orange-yellow-crayola);
-    font-size: var(--fs-5);
-    font-weight: var(--fw-500);
-}
-
-.code-block-description {
-    padding: 1rem 1.5rem;
-    color: var(--light-gray);
-    font-size: var(--fs-6);
-    line-height: 1.6;
-    border-bottom: 1px solid var(--jet);
-}
-
-
-/* Code Content */
-
-.code-block {
-    margin: 0;
-    overflow: auto;
-    font-family: 'Fira Code', monospace;
-    font-size: var(--fs-7);
-    line-height: 1.5;
-    background: var(--smoky-black);
-}
-
-.code-block code {
-    display: block;
-    padding: 1rem 0;
-}
-
-.code-line {
-    display: flex;
-    white-space: pre;
-    padding: 0 1rem 0 4rem;
-    position: relative;
-    min-height: 1.5em;
-}
-
-.code-line .line-number {
-    position: absolute;
-    left: 0;
-    width: 3rem;
-    text-align: right;
-    color: var(--light-gray-70);
-    user-select: none;
-    padding-right: 1rem;
-}
-
-
-/* Add these to your existing syntax highlighting styles */
-
-.code-line .text {
-    color: var(--light-gray);
-    /* Default text color */
-}
-
-.code-line .indent {
-    white-space: pre;
-}
-
-
-/* Update existing styles */
-
-.code-line {
-    display: flex;
-    white-space: pre;
-    position: relative;
-    min-height: 1.5em;
-    padding-left: 4rem;
-    /* Base padding for line numbers */
-}
-
-.code-line span {
-    display: inline-block;
-}
-
-.code-line .line-number {
-    position: absolute;
-    left: 0;
-    width: 3rem;
-    text-align: right;
-    color: var(--light-gray-70);
-    user-select: none;
-    padding-right: 1rem;
-}
-
-
-/* Indentation levels */
-
-.code-line.indent-level-0 {
-    padding-left: 4rem;
-}
-
-.code-line.indent-level-1 {
-    padding-left: 6rem;
-}
-
-.code-line.indent-level-2 {
-    padding-left: 8rem;
-}
-
-.code-line.indent-level-3 {
-    padding-left: 10rem;
-}
-
-.code-line.indent-level-4 {
-    padding-left: 12rem;
-}
-
-.code-line.indent-level-5 {
-    padding-left: 14rem;
-}
-
-.code-line.indent-level-6 {
-    padding-left: 16rem;
-}
-
-
-/* Ensure line numbers stay fixed */
-
-.code-line .line-number {
-    position: absolute;
-    left: 0;
-    width: 3rem;
-    text-align: right;
-    color: var(--light-gray-70);
-    user-select: none;
-    padding-right: 1rem;
-}
-
-
-/* Add highlight styling */
-
-.code-line.highlight {
-    background: rgba(255, 255, 255, 0.05);
-    border-left: 3px solid var(--orange-yellow-crayola);
-}
-
-
 /* Update code blocks section title only */
 
 .code-blocks-content .section-title {
@@ -1756,4 +1628,84 @@
     height: 2px;
     background: var(--orange-yellow-crayola);
     border-radius: 1px;
+}
+
+.code-line .string {
+    color: #CE9178;
+    /* Soft orange for strings */
+}
+
+.code-line .variable {
+    color: #9CDCFE;
+    /* Light blue for variables */
+    font-weight: bold;
+    /* Bold for emphasis */
+}
+
+.code-line .comment {
+    color: #6A9955;
+    /* Green for comments */
+}
+
+.code-line .decorator {
+    color: #C586C0;
+    /* Purple for decorators */
+    font-style: italic;
+}
+
+
+/* CSS-specific token styles */
+
+.code-line .class-name {
+    color: var(--vegas-gold);
+    /* Theme gold for class names */
+}
+
+.code-line .id {
+    color: var(--cornflower-blue);
+    /* Blue color for ID selectors */
+}
+
+.code-line .property {
+    color: var(--sage);
+    /* Sage green for CSS properties */
+    font-style: italic;
+}
+
+.code-line .property-value {
+    color: #CE9178;
+    /* Soft orange for property values */
+}
+
+.code-line .property-unit {
+    color: var(--vegas-gold);
+    /* Theme gold for units */
+}
+
+.code-line .pseudo {
+    color: #C586C0;
+    /* Purple for pseudo-classes/elements */
+    font-style: italic;
+}
+
+.code-line .at-rule {
+    color: #569CD6;
+    /* Blue for @-rules */
+    font-weight: var(--fw-500);
+}
+
+.code-line .css-function {
+    color: #DCDCAA;
+    /* Yellow for CSS functions like var(), calc() */
+}
+
+.code-line .media {
+    color: #569CD6;
+    /* Blue for media queries */
+}
+
+.code-line .cssvariable {
+    color: var(--light-blue);
+    /* Light blue for CSS variables */
+    font-style: italic;
 }

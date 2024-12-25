@@ -92,12 +92,14 @@ function measureLeadingIndent($line) {
 function tokenizeLine($line, $language = 'python') {
     switch ($language) {
         case 'javascript':
-            $tokens = tokenizeJavaScript($line);
+            $tokens = tokenizeJavaScriptSpecific($line);
             break;
         case 'css':
-            $tokens = tokenizeCSS($line);
+            $tokens = tokenizeCSSSpecific($line);
             break;
         case 'python':
+            $tokens = tokenizePythonSpecific($line);
+            break;
         default:
             $tokens = tokenizePython($line);
     }
@@ -933,7 +935,7 @@ function renderCodeBlock($code, $language, $highlights = []) {
 /**
  * JavaScript-specific tokenizer
  */
-function tokenizeJavaScript($line) {
+function tokenizeJavaScriptSpecific($line) {
     static $multilineState = null;
     
     $tokens = [];
@@ -941,15 +943,28 @@ function tokenizeJavaScript($line) {
     $lineLength = strlen($line);
     
     while ($pos < $lineLength) {
-        // Safety check for string access
         if ($pos < 0 || $pos >= $lineLength) {
             break;
         }
 
-        // Try each symbol pair configuration
+        // Handle existing multiline state first
+        if ($multilineState !== null) {
+            $endPos = strpos($line, $multilineState['end'], $pos);
+            if ($endPos !== false) {
+                $content = substr($line, $pos, $endPos + strlen($multilineState['end']) - $pos);
+                $tokens[] = ['type' => $multilineState['type'], 'content' => $content];
+                $pos = $endPos + strlen($multilineState['end']);
+                $multilineState = null;
+                continue;
+            } else {
+                $tokens[] = ['type' => $multilineState['type'], 'content' => substr($line, $pos)];
+                break;
+            }
+        }
+
         $matched = false;
-        foreach (getJavaScriptSymbolPairsConfig() as $config) {
-            $result = processInBetweenSymbols($line, $pos, $config, $multilineState, 'javascript');
+        foreach (getJavaScriptSymbolPairsSpecific() as $config) {
+            $result = processJavaScriptInBetweenSymbols($line, $pos, $config, $multilineState);
             if ($result && isset($result['tokens'])) {
                 $tokens = array_merge($tokens, $result['tokens']);
                 $pos = $result['newPos'];
@@ -959,38 +974,195 @@ function tokenizeJavaScript($line) {
             }
         }
 
-        if ($matched) {
-            continue;
-        }
+        if ($matched) continue;
 
-        // Check for JavaScript keywords and builtins
-        $tokenCheck = checkJavaScriptToken($line, $pos);
+        $tokenCheck = checkJavaScriptTokenSpecific($line, $pos);
         if ($tokenCheck) {
             $tokens[] = $tokenCheck['token'];
             $pos += strlen($tokenCheck['token']['content']);
             continue;
         }
 
-        // Safe character access
         if ($pos >= 0 && $pos < $lineLength) {
             $tokens[] = ['type' => 'text', 'content' => $line[$pos]];
         }
         $pos++;
     }
-    
     return $tokens;
 }
 
-/**
- * Check for JavaScript tokens
- */
-function checkJavaScriptToken($line, $pos) {
-    // Safety check for position
-    if ($pos < 0 || $pos >= strlen($line)) {
+function getJavaScriptSymbolPairsSpecific() {
+    return [
+        [
+            'start' => '//',
+            'end' => "\n",
+            'type' => 'comment',
+            'interpolation' => null
+        ],
+        [
+            'start' => '/*',
+            'end' => '*/',
+            'type' => 'comment',
+            'interpolation' => null
+        ],
+        [
+            'start' => '`',
+            'end' => '`',
+            'type' => 'string',
+            'interpolation' => [
+                'pairs' => [
+                    ['start' => '${', 'end' => '}']
+                ]
+            ]
+        ],
+        [
+            'start' => '"',
+            'end' => '"',
+            'type' => 'string',
+            'interpolation' => null
+        ],
+        [
+            'start' => "'",
+            'end' => "'",
+            'type' => 'string',
+            'interpolation' => null
+        ]
+    ];
+}
+
+function processJavaScriptInBetweenSymbols($line, $pos, $config, $currentState) {
+    $lineLength = strlen($line);
+    
+    if (!isset($config['start']) || !isset($config['end']) || !isset($config['type'])) {
         return null;
     }
 
-    $jsComponents = [
+    if ($currentState) {
+        $endPos = strpos($line, $currentState['end'], $pos);
+        
+        if ($endPos !== false) {
+            $content = substr($line, $pos, $endPos + strlen($currentState['end']) - $pos);
+            
+            if (isset($currentState['interpolation'])) {
+                $tokens = processJavaScriptWithInterpolation($content, $currentState['type'], $currentState['interpolation']['pairs']);
+            } else {
+                $tokens = [['type' => $currentState['type'], 'content' => $content]];
+            }
+            
+            return [
+                'tokens' => $tokens,
+                'newPos' => $endPos + strlen($currentState['end']),
+                'multilineState' => null
+            ];
+        }
+    }
+
+    if (substr_compare($line, $config['start'], $pos, strlen($config['start'])) !== 0) {
+        return null;
+    }
+
+    $buffer = $config['start'];
+    $currentPos = $pos + strlen($config['start']);
+    
+    while ($currentPos < $lineLength) {
+        if (substr_compare($line, $config['end'], $currentPos, strlen($config['end'])) === 0) {
+            $buffer .= substr($line, $currentPos, strlen($config['end']));
+            
+            if (isset($config['interpolation'])) {
+                $tokens = processJavaScriptWithInterpolation($buffer, $config['type'], $config['interpolation']['pairs']);
+            } else {
+                $tokens = [['type' => $config['type'], 'content' => $buffer]];
+            }
+            
+            return [
+                'tokens' => $tokens,
+                'newPos' => $currentPos + strlen($config['end']),
+                'multilineState' => null
+            ];
+        }
+        
+        $buffer .= $line[$currentPos];
+        $currentPos++;
+    }
+
+    return [
+        'tokens' => [['type' => $config['type'], 'content' => $buffer]],
+        'newPos' => $lineLength,
+        'multilineState' => [
+            'type' => $config['type'],
+            'end' => $config['end'],
+            'interpolation' => $config['interpolation']
+        ]
+    ];
+}
+
+function processJavaScriptWithInterpolation($text, $type, $interpolationPairs) {
+    $tokens = [];
+    $pos = 0;
+    $length = strlen($text);
+    $buffer = '';
+
+    while ($pos < $length) {
+        $foundInterpolation = false;
+        
+        foreach ($interpolationPairs as $pair) {
+            if (substr_compare($text, $pair['start'], $pos, strlen($pair['start'])) === 0) {
+                if ($buffer !== '') {
+                    $tokens[] = ['type' => $type, 'content' => $buffer];
+                    $buffer = '';
+                }
+
+                $tokens[] = ['type' => 'delimiter', 'content' => $pair['start']];
+
+                $interpBuffer = '';
+                $interpPos = $pos + strlen($pair['start']);
+                $depth = 1;
+
+                while ($interpPos < $length && $depth > 0) {
+                    if (substr_compare($text, $pair['start'], $interpPos, strlen($pair['start'])) === 0) {
+                        $depth++;
+                        $interpBuffer .= substr($text, $interpPos, strlen($pair['start']));
+                        $interpPos += strlen($pair['start']);
+                    } else if (substr_compare($text, $pair['end'], $interpPos, strlen($pair['end'])) === 0) {
+                        $depth--;
+                        if ($depth > 0) {
+                            $interpBuffer .= substr($text, $interpPos, strlen($pair['end']));
+                        }
+                        $interpPos += strlen($pair['end']);
+                    } else {
+                        $interpBuffer .= $text[$interpPos];
+                        $interpPos++;
+                    }
+                }
+
+                if ($depth === 0) {
+                    $innerTokens = tokenizeJavaScriptSpecific($interpBuffer);
+                    $tokens = array_merge($tokens, $innerTokens);
+                    $tokens[] = ['type' => 'delimiter', 'content' => $pair['end']];
+                    $pos = $interpPos;
+                    $foundInterpolation = true;
+                    break;
+                } else {
+                    $buffer .= $pair['start'] . $interpBuffer;
+                }
+            }
+        }
+
+        if (!$foundInterpolation) {
+            $buffer .= $text[$pos];
+            $pos++;
+        }
+    }
+
+    if ($buffer !== '') {
+        $tokens[] = ['type' => $type, 'content' => $buffer];
+    }
+
+    return $tokens;
+}
+
+function getJavaScriptComponentsSpecific() {
+    return [
         'keywords' => [
             'function', 'class', 'return', 'if', 'else', 'for', 'while', 'do',
             'break', 'continue', 'try', 'catch', 'finally', 'throw', 'switch',
@@ -1018,6 +1190,14 @@ function checkJavaScriptToken($line, $pos) {
             '.', ',', ';', '(', ')', '[', ']', '{', '}', '`'
         ]
     ];
+}
+
+function checkJavaScriptTokenSpecific($line, $pos) {
+    if ($pos < 0 || $pos >= strlen($line)) {
+        return null;
+    }
+
+    $jsComponents = getJavaScriptComponentsSpecific();
 
     // Check for numbers (including decimals, hex, binary, octal)
     if (preg_match('/^(?:0[xXbBoO][0-9a-fA-F]+|(?:\d*\.)?\d+(?:[eE][+-]?\d+)?)/', substr($line, $pos), $matches)) {
@@ -1045,7 +1225,9 @@ function checkJavaScriptToken($line, $pos) {
             continue;
         }
         
-        if (substr_compare($line, $keyword, $pos, $len) === 0) {
+        $substr = substr($line, $pos, $len);
+        
+        if ($substr === $keyword) {
             $nextChar = $pos + $len < strlen($line) ? $line[$pos + $len] : ' ';
             $prevChar = ($pos > 0 && $pos < strlen($line)) ? $line[$pos - 1] : ' ';
             
@@ -1062,7 +1244,9 @@ function checkJavaScriptToken($line, $pos) {
             continue;
         }
         
-        if (substr_compare($line, $builtin, $pos, $len) === 0) {
+        $substr = substr($line, $pos, $len);
+        
+        if ($substr === $builtin) {
             $nextChar = $pos + $len < strlen($line) ? $line[$pos + $len] : ' ';
             $prevChar = ($pos > 0 && $pos < strlen($line)) ? $line[$pos - 1] : ' ';
             
@@ -1076,56 +1260,9 @@ function checkJavaScriptToken($line, $pos) {
 }
 
 /**
- * Configuration for JavaScript symbol pairs
+ * CSS-specific tokenizer and supporting functions
  */
-function getJavaScriptSymbolPairsConfig() {
-    return [
-        // Single line comments
-        [
-            'start' => '//',
-            'end' => "  ",
-            'type' => 'comment',
-            'interpolation' => null
-        ],
-        // Multi-line comments
-        [
-            'start' => '/*',
-            'end' => '*/',
-            'type' => 'comment',
-            'interpolation' => null
-        ],
-        // Template literals with interpolation
-        [
-            'start' => '`',
-            'end' => '`',
-            'type' => 'string',
-            'interpolation' => [
-                'pairs' => [
-                    ['start' => '${', 'end' => '}']
-                ]
-            ]
-        ],
-        // Regular double quoted strings
-        [
-            'start' => '"',
-            'end' => '"',
-            'type' => 'string',
-            'interpolation' => null
-        ],
-        // Regular single quoted strings
-        [
-            'start' => "'",
-            'end' => "'",
-            'type' => 'string',
-            'interpolation' => null
-        ]
-    ];
-}
-
-/**
- * CSS-specific tokenizer
- */
-function tokenizeCSS($line) {
+function tokenizeCSSSpecific($line) {
     static $multilineState = null;
     
     $tokens = [];
@@ -1133,15 +1270,28 @@ function tokenizeCSS($line) {
     $lineLength = strlen($line);
     
     while ($pos < $lineLength) {
-        // Safety check for string access
         if ($pos < 0 || $pos >= $lineLength) {
             break;
         }
 
-        // Try each symbol pair configuration
+        // Handle existing multiline state first
+        if ($multilineState !== null) {
+            $endPos = strpos($line, $multilineState['end'], $pos);
+            if ($endPos !== false) {
+                $content = substr($line, $pos, $endPos + strlen($multilineState['end']) - $pos);
+                $tokens[] = ['type' => $multilineState['type'], 'content' => $content];
+                $pos = $endPos + strlen($multilineState['end']);
+                $multilineState = null;
+                continue;
+            } else {
+                $tokens[] = ['type' => $multilineState['type'], 'content' => substr($line, $pos)];
+                break;
+            }
+        }
+
         $matched = false;
-        foreach (getCSSSymbolPairsConfig() as $config) {
-            $result = processInBetweenSymbols($line, $pos, $config, $multilineState, 'css');
+        foreach (getCSSSymbolPairsSpecific() as $config) {
+            $result = processCSSInBetweenSymbols($line, $pos, $config, $multilineState);
             if ($result && isset($result['tokens'])) {
                 $tokens = array_merge($tokens, $result['tokens']);
                 $pos = $result['newPos'];
@@ -1151,38 +1301,179 @@ function tokenizeCSS($line) {
             }
         }
 
-        if ($matched) {
-            continue;
-        }
+        if ($matched) continue;
 
-        // Check for CSS specific tokens
-        $tokenCheck = checkCSSToken($line, $pos);
+        $tokenCheck = checkCSSTokenSpecific($line, $pos);
         if ($tokenCheck) {
             $tokens[] = $tokenCheck['token'];
             $pos += strlen($tokenCheck['token']['content']);
             continue;
         }
 
-        // Safe character access
         if ($pos >= 0 && $pos < $lineLength) {
             $tokens[] = ['type' => 'text', 'content' => $line[$pos]];
         }
         $pos++;
     }
-    
     return $tokens;
 }
 
-/**
- * Check for CSS tokens
- */
-function checkCSSToken($line, $pos) {
-    // Safety check for position
-    if ($pos < 0 || $pos >= strlen($line)) {
+function getCSSSymbolPairsSpecific() {
+    return [
+        [
+            'start' => '/*',
+            'end' => '*/',
+            'type' => 'comment',
+            'interpolation' => null
+        ],
+        [
+            'start' => '"',
+            'end' => '"',
+            'type' => 'string',
+            'interpolation' => null
+        ],
+        [
+            'start' => "'",
+            'end' => "'",
+            'type' => 'string',
+            'interpolation' => null
+        ]
+    ];
+}
+
+function processCSSInBetweenSymbols($line, $pos, $config, $currentState) {
+    $lineLength = strlen($line);
+    
+    if (!isset($config['start']) || !isset($config['end']) || !isset($config['type'])) {
         return null;
     }
 
-    $cssComponents = [
+    if ($currentState) {
+        $endPos = strpos($line, $currentState['end'], $pos);
+        
+        if ($endPos !== false) {
+            $content = substr($line, $pos, $endPos + strlen($currentState['end']) - $pos);
+            
+            if (isset($currentState['interpolation'])) {
+                $tokens = processCSSWithInterpolation($content, $currentState['type'], $currentState['interpolation']['pairs']);
+            } else {
+                $tokens = [['type' => $currentState['type'], 'content' => $content]];
+            }
+            
+            return [
+                'tokens' => $tokens,
+                'newPos' => $endPos + strlen($currentState['end']),
+                'multilineState' => null
+            ];
+        }
+    }
+
+    if (substr_compare($line, $config['start'], $pos, strlen($config['start'])) !== 0) {
+        return null;
+    }
+
+    $buffer = $config['start'];
+    $currentPos = $pos + strlen($config['start']);
+    
+    while ($currentPos < $lineLength) {
+        if (substr_compare($line, $config['end'], $currentPos, strlen($config['end'])) === 0) {
+            $buffer .= substr($line, $currentPos, strlen($config['end']));
+            
+            if (isset($config['interpolation'])) {
+                $tokens = processCSSWithInterpolation($buffer, $config['type'], $config['interpolation']['pairs']);
+            } else {
+                $tokens = [['type' => $config['type'], 'content' => $buffer]];
+            }
+            
+            return [
+                'tokens' => $tokens,
+                'newPos' => $currentPos + strlen($config['end']),
+                'multilineState' => null
+            ];
+        }
+        
+        $buffer .= $line[$currentPos];
+        $currentPos++;
+    }
+
+    return [
+        'tokens' => [['type' => $config['type'], 'content' => $buffer]],
+        'newPos' => $lineLength,
+        'multilineState' => [
+            'type' => $config['type'],
+            'end' => $config['end'],
+            'interpolation' => $config['interpolation']
+        ]
+    ];
+}
+
+function processCSSWithInterpolation($text, $type, $interpolationPairs) {
+    $tokens = [];
+    $pos = 0;
+    $length = strlen($text);
+    $buffer = '';
+
+    while ($pos < $length) {
+        $foundInterpolation = false;
+        
+        foreach ($interpolationPairs as $pair) {
+            if (substr_compare($text, $pair['start'], $pos, strlen($pair['start'])) === 0) {
+                if ($buffer !== '') {
+                    $tokens[] = ['type' => $type, 'content' => $buffer];
+                    $buffer = '';
+                }
+
+                $tokens[] = ['type' => 'delimiter', 'content' => $pair['start']];
+
+                $interpBuffer = '';
+                $interpPos = $pos + strlen($pair['start']);
+                $depth = 1;
+
+                while ($interpPos < $length && $depth > 0) {
+                    if (substr_compare($text, $pair['start'], $interpPos, strlen($pair['start'])) === 0) {
+                        $depth++;
+                        $interpBuffer .= substr($text, $interpPos, strlen($pair['start']));
+                        $interpPos += strlen($pair['start']);
+                    } else if (substr_compare($text, $pair['end'], $interpPos, strlen($pair['end'])) === 0) {
+                        $depth--;
+                        if ($depth > 0) {
+                            $interpBuffer .= substr($text, $interpPos, strlen($pair['end']));
+                        }
+                        $interpPos += strlen($pair['end']);
+                    } else {
+                        $interpBuffer .= $text[$interpPos];
+                        $interpPos++;
+                    }
+                }
+
+                if ($depth === 0) {
+                    $innerTokens = tokenizeCSSSpecific($interpBuffer);
+                    $tokens = array_merge($tokens, $innerTokens);
+                    $tokens[] = ['type' => 'delimiter', 'content' => $pair['end']];
+                    $pos = $interpPos;
+                    $foundInterpolation = true;
+                    break;
+                } else {
+                    $buffer .= $pair['start'] . $interpBuffer;
+                }
+            }
+        }
+
+        if (!$foundInterpolation) {
+            $buffer .= $text[$pos];
+            $pos++;
+        }
+    }
+
+    if ($buffer !== '') {
+        $tokens[] = ['type' => $type, 'content' => $buffer];
+    }
+
+    return $tokens;
+}
+
+function getCSSComponentsSpecific() {
+    return [
         'at-rules' => [
             '@media', '@import', '@keyframes', '@font-face', '@supports',
             '@layer', '@container', '@property', '@charset', '@namespace'
@@ -1213,6 +1504,14 @@ function checkCSSToken($line, $pos) {
             'fixed', 'sticky', 'hidden', 'visible', 'pointer'
         ]
     ];
+}
+
+function checkCSSTokenSpecific($line, $pos) {
+    if ($pos < 0 || $pos >= strlen($line)) {
+        return null;
+    }
+
+    $cssComponents = getCSSComponentsSpecific();
 
     // Check for hex colors
     if (preg_match('/^#[0-9a-fA-F]{3,8}/', substr($line, $pos), $matches)) {
@@ -1224,7 +1523,6 @@ function checkCSSToken($line, $pos) {
         $number = $matches[0];
         $len = strlen($number);
         
-        // Look for unit after number
         foreach ($cssComponents['units'] as $unit) {
             if (substr_compare($line, $unit, $pos + $len, strlen($unit)) === 0) {
                 return ['token' => [
@@ -1234,7 +1532,6 @@ function checkCSSToken($line, $pos) {
             }
         }
         
-        // Just a number without unit
         return ['token' => ['type' => 'number', 'content' => $number]];
     }
 
@@ -1294,30 +1591,340 @@ function checkCSSToken($line, $pos) {
 }
 
 /**
- * Configuration for CSS symbol pairs
+ * Python-specific tokenizer and supporting functions
  */
-function getCSSSymbolPairsConfig() {
+function tokenizePythonSpecific($line) {
+    static $multilineState = null;
+    
+    $tokens = [];
+    $pos = 0;
+    $lineLength = strlen($line);
+    
+    while ($pos < $lineLength) {
+        if ($pos < 0 || $pos >= $lineLength) {
+            break;
+        }
+
+        // Handle existing multiline state first
+        if ($multilineState !== null) {
+            $endPos = strpos($line, $multilineState['end'], $pos);
+            if ($endPos !== false) {
+                // Found end of multiline - include up to end marker
+                $content = substr($line, $pos, $endPos + strlen($multilineState['end']) - $pos);
+                $tokens[] = ['type' => $multilineState['type'], 'content' => $content];
+                $pos = $endPos + strlen($multilineState['end']);
+                $multilineState = null;
+                continue;
+            } else {
+                // Still in multiline - take whole line
+                $tokens[] = ['type' => $multilineState['type'], 'content' => substr($line, $pos)];
+                break;
+            }
+        }
+
+        $matched = false;
+        foreach (getPythonSymbolPairsConfig() as $config) {
+            $result = processPythonInBetweenSymbols($line, $pos, $config, $multilineState);
+            if ($result && isset($result['tokens'])) {
+                $tokens = array_merge($tokens, $result['tokens']);
+                $pos = $result['newPos'];
+                $multilineState = $result['multilineState'];
+                $matched = true;
+                break;
+            }
+        }
+
+        if ($matched) {
+            continue;
+        }
+
+        $tokenCheck = checkPythonTokenSpecific($line, $pos);
+        if ($tokenCheck) {
+            $tokens[] = $tokenCheck['token'];
+            $pos += strlen($tokenCheck['token']['content']);
+            continue;
+        }
+
+        if ($pos >= 0 && $pos < $lineLength) {
+            $tokens[] = ['type' => 'text', 'content' => $line[$pos]];
+        }
+        $pos++;
+    }
+    
+    return $tokens;
+}
+
+function getPythonSymbolPairsConfig() {
     return [
-        // Comments
         [
-            'start' => '/*',
-            'end' => '*/',
+            'start' => '"""',
+            'end' => '"""',
             'type' => 'comment',
             'interpolation' => null
         ],
-        // Strings with double quotes
+        [
+            'start' => "'''",
+            'end' => "'''",
+            'type' => 'comment',
+            'interpolation' => null
+        ],
+        [
+            'start' => 'f"',
+            'end' => '"',
+            'type' => 'string',
+            'interpolation' => [
+                'pairs' => [
+                    ['start' => '{', 'end' => '}']
+                ]
+            ]
+        ],
+        [
+            'start' => "f'",
+            'end' => "'",
+            'type' => 'string',
+            'interpolation' => [
+                'pairs' => [
+                    ['start' => '{', 'end' => '}']
+                ]
+            ]
+        ],
         [
             'start' => '"',
             'end' => '"',
             'type' => 'string',
             'interpolation' => null
         ],
-        // Strings with single quotes
         [
             'start' => "'",
             'end' => "'",
             'type' => 'string',
             'interpolation' => null
+        ],
+        [
+            'start' => '@',
+            'end' => ' ',
+            'type' => 'decorator',
+            'interpolation' => null
         ]
     ];
+}
+
+function processPythonInBetweenSymbols($line, $pos, $config, $currentState) {
+    $lineLength = strlen($line);
+    
+    if (!isset($config['start']) || !isset($config['end']) || !isset($config['type'])) {
+        return null;
+    }
+
+    if ($currentState) {
+        $endPos = strpos($line, $currentState['end'], $pos);
+        
+        if ($endPos !== false) {
+            $content = substr($line, $pos, $endPos + strlen($currentState['end']) - $pos);
+            
+            if (isset($currentState['interpolation'])) {
+                $tokens = processPythonWithInterpolation($content, $currentState['type'], $currentState['interpolation']['pairs']);
+            } else {
+                $tokens = [['type' => $currentState['type'], 'content' => $content]];
+            }
+            
+            return [
+                'tokens' => $tokens,
+                'newPos' => $endPos + strlen($currentState['end']),
+                'multilineState' => null
+            ];
+        }
+    }
+
+    if (substr_compare($line, $config['start'], $pos, strlen($config['start'])) !== 0) {
+        return null;
+    }
+
+    $buffer = $config['start'];
+    $currentPos = $pos + strlen($config['start']);
+    
+    while ($currentPos < $lineLength) {
+        if (substr_compare($line, $config['end'], $currentPos, strlen($config['end'])) === 0) {
+            $buffer .= substr($line, $currentPos, strlen($config['end']));
+            
+            if (isset($config['interpolation'])) {
+                $tokens = processPythonWithInterpolation($buffer, $config['type'], $config['interpolation']['pairs']);
+            } else {
+                $tokens = [['type' => $config['type'], 'content' => $buffer]];
+            }
+            
+            return [
+                'tokens' => $tokens,
+                'newPos' => $currentPos + strlen($config['end']),
+                'multilineState' => null
+            ];
+        }
+        
+        $buffer .= $line[$currentPos];
+        $currentPos++;
+    }
+
+    return [
+        'tokens' => [['type' => $config['type'], 'content' => $buffer]],
+        'newPos' => $lineLength,
+        'multilineState' => [
+            'type' => $config['type'],
+            'end' => $config['end'],
+            'interpolation' => $config['interpolation']
+        ]
+    ];
+}
+
+function processPythonWithInterpolation($text, $type, $interpolationPairs) {
+    $tokens = [];
+    $pos = 0;
+    $length = strlen($text);
+    $buffer = '';
+
+    while ($pos < $length) {
+        $foundInterpolation = false;
+        
+        foreach ($interpolationPairs as $pair) {
+            if (substr_compare($text, $pair['start'], $pos, strlen($pair['start'])) === 0) {
+                if ($buffer !== '') {
+                    $tokens[] = ['type' => $type, 'content' => $buffer];
+                    $buffer = '';
+                }
+
+                $tokens[] = ['type' => 'delimiter', 'content' => $pair['start']];
+
+                $interpBuffer = '';
+                $interpPos = $pos + strlen($pair['start']);
+                $depth = 1;
+
+                while ($interpPos < $length && $depth > 0) {
+                    if (substr_compare($text, $pair['start'], $interpPos, strlen($pair['start'])) === 0) {
+                        $depth++;
+                        $interpBuffer .= substr($text, $interpPos, strlen($pair['start']));
+                        $interpPos += strlen($pair['start']);
+                    } else if (substr_compare($text, $pair['end'], $interpPos, strlen($pair['end'])) === 0) {
+                        $depth--;
+                        if ($depth > 0) {
+                            $interpBuffer .= substr($text, $interpPos, strlen($pair['end']));
+                        }
+                        $interpPos += strlen($pair['end']);
+                    } else {
+                        $interpBuffer .= $text[$interpPos];
+                        $interpPos++;
+                    }
+                }
+
+                if ($depth === 0) {
+                    $innerTokens = tokenizePythonSpecific($interpBuffer);
+                    $tokens = array_merge($tokens, $innerTokens);
+                    $tokens[] = ['type' => 'delimiter', 'content' => $pair['end']];
+                    $pos = $interpPos;
+                    $foundInterpolation = true;
+                    break;
+                } else {
+                    $buffer .= $pair['start'] . $interpBuffer;
+                }
+            }
+        }
+
+        if (!$foundInterpolation) {
+            $buffer .= $text[$pos];
+            $pos++;
+        }
+    }
+
+    if ($buffer !== '') {
+        $tokens[] = ['type' => $type, 'content' => $buffer];
+    }
+
+    return $tokens;
+}
+
+function checkPythonTokenSpecific($line, $pos) {
+    if ($pos < 0 || $pos >= strlen($line)) {
+        return null;
+    }
+
+    $pythonComponents = getPythonComponentsSpecific();
+
+    foreach ($pythonComponents['keywords'] as $keyword) {
+        $len = strlen($keyword);
+        if ($pos + $len > strlen($line)) {
+            continue;
+        }
+        
+        $substr = substr($line, $pos, $len);
+        
+        if ($substr === $keyword) {
+            $nextChar = $pos + $len < strlen($line) ? $line[$pos + $len] : ' ';
+            $prevChar = ($pos > 0 && $pos < strlen($line)) ? $line[$pos - 1] : ' ';
+            
+            if (isWordBoundary($prevChar) && (isWordBoundary($nextChar) || $nextChar === ':')) {
+                return ['token' => ['type' => 'keyword', 'content' => $keyword]];
+            }
+        }
+    }
+
+    foreach ($pythonComponents['builtins'] as $builtin) {
+        $len = strlen($builtin);
+        if ($pos + $len > strlen($line)) {
+            continue;
+        }
+        
+        $substr = substr($line, $pos, $len);
+        
+        if ($substr === $builtin) {
+            $nextChar = $pos + $len < strlen($line) ? $line[$pos + $len] : ' ';
+            $prevChar = ($pos > 0 && $pos < strlen($line)) ? $line[$pos - 1] : ' ';
+            
+            if (isWordBoundary($prevChar) && isWordBoundary($nextChar)) {
+                return ['token' => ['type' => 'builtin', 'content' => $builtin]];
+            }
+        }
+    }
+
+    return null;
+}
+
+function getPythonComponentsSpecific() {
+    return [
+        'keywords' => [
+            'def', 'class', 'return', 'import', 'from', 'if', 'else', 'elif',
+            'for', 'while', 'try:', 'except', 'as', 'with', 'in', 'is', 'not',
+            'and', 'or', 'True', 'False', 'None', 'self', 'lambda', 'yield',
+            'raise', 'break', 'continue', 'pass', 'assert', 'del', 'global',
+            'nonlocal', 'async', 'await'
+        ],
+        'builtins' => [
+            'print', 'len', 'range', 'str', 'int', 'float', 'list', 'dict',
+            'set', 'tuple', 'bool', 'map', 'filter', 'zip', 'enumerate',
+            'super', 'isinstance', 'type', 'min', 'max', 'sum', 'any', 'all'
+        ]
+    ];
+}
+
+/**
+ * Checks if current position starts a Python multiline token
+ */
+function checkPythonMultilineStart($line, $pos) {
+    $multilineDelimiters = [
+        ['start' => '"""', 'end' => '"""', 'type' => 'comment'],
+        ['start' => "'''", 'end' => "'''", 'type' => 'comment']
+    ];
+    
+    foreach ($multilineDelimiters as $delimiter) {
+        if (substr($line, $pos, strlen($delimiter['start'])) === $delimiter['start']) {
+            $endPos = strpos($line, $delimiter['end'], $pos + strlen($delimiter['start']));
+            return [
+                'found' => true,
+                'delimiter' => $delimiter,
+                'closedInLine' => $endPos !== false,
+                'content' => $endPos !== false ? 
+                    substr($line, $pos, $endPos + strlen($delimiter['end']) - $pos) :
+                    substr($line, $pos)
+            ];
+        }
+    }
+    
+    return ['found' => false];
 } 

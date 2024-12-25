@@ -15,6 +15,7 @@ import { initChat } from './modules/chat.js';
 import { initInfiniteScroll } from './modules/infiniteScroll.js';
 import { initCollapse } from './modules/collapse.js';
 import { initBlogPagination } from './modules/blogPagination.js';
+import { initCodeBlockCopy } from './modules/codeBlockCopy.js';
 import FloatingChat from './modules/floatingChat.js';
 import initCertificationSlider from './modules/certificationSlider.js';
 
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initInfiniteScroll();
     initCollapse();
     initBlogPagination();
+    initCodeBlockCopy();
     FloatingChat.init();
     initCertificationSlider();
 });

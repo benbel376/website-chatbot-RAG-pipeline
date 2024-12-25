@@ -1353,13 +1353,14 @@
 /* Code Block Styling */
 
 .code-block {
-    background: var(--eerie-black-1);
-    border-radius: var(--radius-16);
+    background: var(--eerie-black-3);
     margin: 0;
     overflow: auto;
     font-family: 'Fira Code', monospace;
     font-size: var(--fs-7);
     line-height: 1.5;
+    max-height: 600px;
+    position: relative;
 }
 
 .code-block code {
@@ -1439,6 +1440,7 @@
 .code-block::-webkit-scrollbar {
     width: 12px;
     height: 12px;
+    background-color: var(--eerie-black-2);
 }
 
 .code-block::-webkit-scrollbar-track {
@@ -1450,10 +1452,19 @@
     background: var(--jet);
     border: 3px solid var(--eerie-black-2);
     border-radius: 6px;
+    min-height: 40px;
 }
 
-.code-block::-webkit-scrollbar-thumb:hover {
-    background: var(--orange-yellow-crayola);
+.code-block::-webkit-scrollbar-corner {
+    background: var(--eerie-black-2);
+}
+
+
+/* For Firefox */
+
+.code-block {
+    scrollbar-width: thin;
+    scrollbar-color: var(--jet) var(--eerie-black-2);
 }
 
 
@@ -1478,8 +1489,10 @@
 
 .code-block-title {
     color: var(--orange-yellow-crayola);
-    font-size: var(--fs-5);
-    font-weight: var(--fw-500);
+    font-size: var(--fs-7);
+    text-transform: lowercase;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
 }
 
 .copy-button {
@@ -1499,6 +1512,11 @@
 .copy-button:hover {
     border-color: var(--orange-yellow-crayola);
     color: var(--orange-yellow-crayola);
+}
+
+.copy-button ion-icon {
+    font-size: var(--fs-icon);
+    --ionicon-stroke-width: var(--stroke-width-35);
 }
 
 .copy-button.copied {
@@ -1591,12 +1609,12 @@
 /* Code Block Container */
 
 .code-blocks-section {
-    padding: 3rem 0;
+    padding: 0;
     border-top: 1px solid var(--jet);
 }
 
 .code-blocks-content {
-    padding: 0 1rem;
+    padding: 0;
 }
 
 .code-block-container {
@@ -1607,50 +1625,51 @@
     overflow: hidden;
 }
 
-
-/* Update code blocks section title only */
-
-.code-blocks-content .section-title {
-    color: var(--white-2);
-    font-size: var(--fs-4);
-    font-weight: var(--fw-500);
-    margin-bottom: 2rem;
-    position: relative;
-    padding-bottom: 0.5rem;
+.code-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--eerie-black-2);
+    border-bottom: 1px solid var(--jet);
 }
 
-.code-blocks-content .section-title::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 30px;
-    height: 2px;
+.code-block-title {
+    color: var(--orange-yellow-crayola);
+    font-size: var(--fs-7);
+    text-transform: lowercase;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+}
+
+.copy-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--eerie-black-1);
+    border: 1px solid var(--jet);
+    border-radius: var(--radius-8);
+    padding: 0.5rem 1rem;
+    color: var(--light-gray);
+    font-size: var(--fs-8);
+    cursor: pointer;
+    transition: all var(--transition-1);
+}
+
+.copy-button ion-icon {
+    font-size: var(--fs-8);
+    --ionicon-stroke-width: var(--fs-8);
+}
+
+.copy-button:hover {
+    border-color: var(--orange-yellow-crayola);
+    color: var(--orange-yellow-crayola);
+}
+
+.copy-button.copied {
     background: var(--orange-yellow-crayola);
-    border-radius: 1px;
-}
-
-.code-line .string {
-    color: #CE9178;
-    /* Soft orange for strings */
-}
-
-.code-line .variable {
-    color: #9CDCFE;
-    /* Light blue for variables */
-    font-weight: bold;
-    /* Bold for emphasis */
-}
-
-.code-line .comment {
-    color: #6A9955;
-    /* Green for comments */
-}
-
-.code-line .decorator {
-    color: #C586C0;
-    /* Purple for decorators */
-    font-style: italic;
+    border-color: var(--orange-yellow-crayola);
+    color: var(--white-2);
 }
 
 
